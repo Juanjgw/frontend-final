@@ -49,8 +49,12 @@ const LoginScreen = () => {
                             <h3 className='text-center mb-4'>Iniciar sesión</h3>
                             {errorText && <p className='text-danger'>{errorText}</p>}
                             <form onSubmit={handleSubmit}>
-                                <MDBInput label='Correo electrónico:' id='email' name='email' type='email' className='mb-3' />
-                                <MDBInput label='Contraseña:' id='password' name='password' type='password' className='mb-3' />
+                                <div className='mb-3'>
+                                    <MDBInput label='Correo electrónico' id='email' name='email' type='email' wrapperClass='mb-4' />
+                                </div>
+                                <div className='mb-3'>
+                                    <MDBInput label='Contraseña' id='password' name='password' type='password' wrapperClass='mb-4' />
+                                </div>
                                 <MDBBtn type='submit' className='w-100 mb-3'>Iniciar sesión</MDBBtn>
                             </form>
                             <p className='text-center mb-0'>¿Aún no tienes cuenta? <Link to='/register'>Regístrate aquí</Link></p>
