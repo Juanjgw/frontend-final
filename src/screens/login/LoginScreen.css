@@ -14,3 +14,21 @@ body {
 .login-form .mdb-input input[type="password"] {
   padding-top: 30px; /* Ajusta el padding para dar espacio al label */
 }
+
+.my-facebook-button-class {
+  width: 100%;
+  background-color: #3b5998;
+  color: white;
+  font-size: 1.25rem; /* Tamaño de letra grande */
+  padding: 0.5rem 1rem; /* Espaciado */
+  border: none;
+  border-radius: 0.25rem; /* Bordes redondeados */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.my-facebook-button-class .fa-facebook-f {
+  margin-right: 0.5rem;
+}
