@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBCheckbox, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 import { login } from '../../fetching/auth.fetching';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import './LoginScreen.css';
 
 const LoginScreen = () => {
@@ -40,7 +42,7 @@ const LoginScreen = () => {
                 </MDBCol>
                 <MDBCol md='6'>
                     <MDBCard className='my-5'>
-                        <MDBCardBody className='p-5'>
+                        <MDBCardBody className='p-5 login-form'>
                             <div className='text-center mb-4'>
                                 <img src='https://eshopcompany.com/imagenes/logo.JPG' alt='Logo' style={{ width: '150px' }} />
                             </div>
@@ -55,12 +57,12 @@ const LoginScreen = () => {
                             <div className='text-center mt-4'>
                                 <p>o inicia sesión con:</p>
                                 <MDBBtn className="mb-2 w-100" size="lg" style={{ backgroundColor: '#dd4b39' }}>
-                                    <MDBIcon fab icon="google" className="mx-2" />
-                                    Sign in with Google
+                                    <FontAwesomeIcon icon={faGoogle} className="mx-2" />
+                                    Iniciar sesión con Google
                                 </MDBBtn>
                                 <MDBBtn className="mb-4 w-100" size="lg" style={{ backgroundColor: '#3b5998' }}>
-                                    <MDBIcon fab icon="facebook-f" className="mx-2" />
-                                    Sign in with Facebook
+                                    <FontAwesomeIcon icon={faFacebookF} className="mx-2" />
+                                    Iniciar sesión con Facebook
                                 </MDBBtn>
                             </div>
                         </MDBCardBody>

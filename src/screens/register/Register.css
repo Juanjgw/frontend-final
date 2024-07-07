@@ -1,0 +1,7 @@
+body {
+    background-color: hsl(0, 0%, 96%);
+  }
+  .login-form {
+    background-color: #f7f8fc;
+    padding: 20px;
+}

@@ -1,0 +1,16 @@
+body {
+  background-color: hsl(0, 0%, 96%);
+}
+
+
+
+  .login-form {
+    background-color: #f7f8fc;
+    padding: 20px;
+}
+
+
+.login-form .mdb-input input[type="email"],
+.login-form .mdb-input input[type="password"] {
+  padding-top: 30px; /* Ajusta el padding para dar espacio al label */
+}
