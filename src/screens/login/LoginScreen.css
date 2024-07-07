@@ -32,3 +32,6 @@ body {
 .my-facebook-button-class .fa-facebook-f {
   margin-right: 0.5rem;
 }
+.custom-bg-color {
+  background-color: #e2e6f5; 
+}
