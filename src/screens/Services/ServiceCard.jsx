@@ -20,9 +20,7 @@ const ServiceCard = ({ service, isAuthenticated, onWhatsAppClick }) => {
       // Si el usuario está autenticado, llama a la función para abrir WhatsApp
       onWhatsAppClick(contactNumber);
     } else {
-      // Si no está autenticado, manejar la lógica para mostrar el mensaje de inicio de sesión
-      alert('Por favor, inicia sesión para ver el contacto de WhatsApp.');
-      // Podrías redirigir al usuario a la página de inicio de sesión aquí si es necesario
+      navigate('/login');
     }
   };
 

@@ -3,13 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import ServiceList from '../Services/ServiceList';
 import { verificarToken } from '../../fetching/auth.fetching';
 
-const HomeScreen = ({ isLoggedIn }) => {
+const HomeScreen = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [services, setServices] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para manejar si el usuario está autenticado
 
     useEffect(() => {
-        // Cargar los servicios al montar el componente
+        // Verificar si existe un token en localStorage para determinar si el usuario está autenticado
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+
+        // Cargar los servicios al montar el componente (dummyServices solo como ejemplo)
         const dummyServices = [
             { id: 1, title: 'Servicio 1', description: 'Descripción del servicio 1.', rating: 4 },
             { id: 2, title: 'Servicio 2', description: 'Descripción del servicio 2.', rating: 4 },
@@ -26,6 +35,7 @@ const HomeScreen = ({ isLoggedIn }) => {
 
     const handleLogout = () => {
         localStorage.removeItem('token'); // Remover el token del localStorage
+        setIsLoggedIn(false); // Actualizar el estado de isLoggedIn a falso
         navigate('/login');
     };
 
@@ -46,10 +56,10 @@ const HomeScreen = ({ isLoggedIn }) => {
         <div className="container">
             <div className="d-flex justify-content-between align-items-center my-4">
                 <h1>Bienvenido!</h1>
-                {!isLoggedIn ? (
-                    <button className="btn btn-primary" onClick={handleLogin}>Iniciar sesión</button>
-                ) : (
+                {isLoggedIn ? (
                     <button className="btn btn-danger" onClick={handleLogout}>Cerrar sesión</button>
+                ) : (
+                    <button className="btn btn-primary" onClick={handleLogin}>Iniciar sesión</button>
                 )}
             </div>
             <div className="row search-bar mb-4">
@@ -69,5 +79,4 @@ const HomeScreen = ({ isLoggedIn }) => {
 };
 
 export default HomeScreen;
-
 
