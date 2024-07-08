@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import './ServiceCard.css';
 
 const ServiceCard = ({ service, isAuthenticated, onWhatsAppClick }) => {
   const { title, description, rating, contactNumber } = service;
@@ -31,10 +32,10 @@ const ServiceCard = ({ service, isAuthenticated, onWhatsAppClick }) => {
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{description}</p>
         <div className="star-rating">{renderStars()}</div>
-        <button onClick={handleWhatsAppClick} className="btn btn-primary">
-          <FontAwesomeIcon icon={faWhatsapp} />
-          Contactar por WhatsApp
-        </button>
+        <button onClick={handleWhatsAppClick} className="btn whatsapp-button">
+    <FontAwesomeIcon icon={faWhatsapp} style={{ marginRight: '5px' }} />
+    Contactar por WhatsApp
+</button>
       </div>
     </div>
   );

@@ -1,0 +1,15 @@
+.whatsapp-button {
+    background-color: #25D366; /* Color verde característico de WhatsApp */
+    color: #FFFFFF; /* Color de texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Padding */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambiar cursor a pointer al pasar por encima */
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E; /* Color de fondo más oscuro al pasar el ratón */
+}
+.body{
+    background-color: #128C7E;
+}
