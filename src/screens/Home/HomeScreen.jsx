@@ -1,59 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ServiceList from '../Services/ServiceList'; 
+import ServiceList from '../Services/ServiceList';
+import { verificarToken } from '../../fetching/auth.fetching';
 
+const HomeScreen = ({ isLoggedIn }) => {
+    const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState('');
+    const [services, setServices] = useState([]);
 
-const HomeScreen = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
+    useEffect(() => {
+        // Cargar los servicios al montar el componente
+        const dummyServices = [
+            { id: 1, title: 'Servicio 1', description: 'Descripción del servicio 1.', rating: 4 },
+            { id: 2, title: 'Servicio 2', description: 'Descripción del servicio 2.', rating: 4 },
+            { id: 3, title: 'Servicio 3', description: 'Descripción del servicio 3.', rating: 4 },
+            { id: 4, title: 'Servicio 4', description: 'Descripción del servicio 4.', rating: 4 },
+            { id: 5, title: 'Servicio 5', description: 'Descripción del servicio 5.', rating: 4 },
+        ];
+        setServices(dummyServices);
+    }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
+    const handleLogin = () => {
+        navigate('/login');
+    };
 
-  const handleContact = () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    } else {
-      // Lógica para contactar con el proveedor de servicios
-    }
-  };
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Remover el token del localStorage
+        navigate('/login');
+    };
 
-  // Datos de prueba para servicios
-  const services = [
-    { id: 1, title: 'Servicio 1', description: 'Descripción del servicio 1.', rating: 4 },
-    { id: 2, title: 'Servicio 2', description: 'Descripción del servicio 2.', rating: 4 },
-    { id: 3, title: 'Servicio 3', description: 'Descripción del servicio 3.', rating: 4 },
-    { id: 4, title: 'Servicio 4', description: 'Descripción del servicio 4.', rating: 4 },
-    { id: 5, title: 'Servicio 5', description: 'Descripción del servicio 5.', rating: 4 },
-  ];
+    const handleContact = (serviceId) => {
+        if (!isLoggedIn) {
+            navigate('/login');
+        } else {
+            // Lógica para contactar con el proveedor de servicios
+            console.log(`Contactar al proveedor de servicios: ${serviceId}`);
+        }
+    };
 
-  const filteredServices = services.filter(service =>
-    service.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    const filteredServices = services.filter(service =>
+        service.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-  return (
-    <div className="container">
-      <div className="d-flex justify-content-between align-items-center my-4">
-        <h1>Bienvenido!</h1>
-        <button className="btn btn-danger" onClick={handleLogout}>Cerrar sesión</button>
-      </div>
-      <div className="row search-bar mb-4">
-        <div className="col-md-12">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar servicios..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-          />
+    return (
+        <div className="container">
+            <div className="d-flex justify-content-between align-items-center my-4">
+                <h1>Bienvenido!</h1>
+                {!isLoggedIn ? (
+                    <button className="btn btn-primary" onClick={handleLogin}>Iniciar sesión</button>
+                ) : (
+                    <button className="btn btn-danger" onClick={handleLogout}>Cerrar sesión</button>
+                )}
+            </div>
+            <div className="row search-bar mb-4">
+                <div className="col-md-12">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Buscar servicios..."
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                    />
+                </div>
+            </div>
+            <ServiceList services={filteredServices} handleContact={handleContact} />
         </div>
-      </div>
-      <ServiceList services={filteredServices} handleContact={handleContact} />
-    </div>
-  );
-}
+    );
+};
 
 export default HomeScreen;
+
+
