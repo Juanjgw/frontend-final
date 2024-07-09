@@ -81,7 +81,7 @@ const LoginScreen = () => {
                                 {/* Componente FacebookLogin con estilo personalizado */}
                                 <FacebookLogin
                                     appId="497976672798785"
-                                    autoLoad={true}
+                                    autoLoad={false}
                                     fields="id,name,email"
                                     callback={responseFacebook}
                                     cssClass="my-facebook-button-class btn btn-primary w-100"
