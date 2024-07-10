@@ -1,3 +1,4 @@
+// src/screens/Services/ServiceCard.jsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
@@ -18,7 +19,6 @@ const ServiceCard = ({ service, isAuthenticated, onWhatsAppClick }) => {
 
   const handleWhatsAppClick = () => {
     if (isAuthenticated) {
-      // Si el usuario está autenticado, llama a la función para abrir WhatsApp
       onWhatsAppClick(contactNumber);
     } else {
       navigate('/login');
@@ -33,13 +33,12 @@ const ServiceCard = ({ service, isAuthenticated, onWhatsAppClick }) => {
         <p className="card-text">{description}</p>
         <div className="star-rating">{renderStars()}</div>
         <button onClick={handleWhatsAppClick} className="btn whatsapp-button">
-    <FontAwesomeIcon icon={faWhatsapp} style={{ marginRight: '5px' }} />
-    Contactar por WhatsApp
-</button>
+          <FontAwesomeIcon icon={faWhatsapp} style={{ marginRight: '5px' }} />
+          Contactar por WhatsApp
+        </button>
       </div>
     </div>
   );
 };
 
 export default ServiceCard;
-

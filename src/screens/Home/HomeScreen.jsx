@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ServiceList from '../Services/ServiceList';
-import { verificarToken } from '../../fetching/auth.fetching';
+import { getServices } from '../../fetching/services.fetching';
 
 const HomeScreen = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [services, setServices] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para manejar si el usuario está autenticado
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // Verificar si existe un token en localStorage para determinar si el usuario está autenticado
         const token = localStorage.getItem('token');
         if (token) {
             setIsLoggedIn(true);
@@ -18,15 +17,16 @@ const HomeScreen = () => {
             setIsLoggedIn(false);
         }
 
-        // Cargar los servicios al montar el componente (dummyServices solo como ejemplo)
-        const dummyServices = [
-            { id: 1, title: 'Servicio 1', description: 'Descripción del servicio 1.', rating: 4 },
-            { id: 2, title: 'Servicio 2', description: 'Descripción del servicio 2.', rating: 4 },
-            { id: 3, title: 'Servicio 3', description: 'Descripción del servicio 3.', rating: 4 },
-            { id: 4, title: 'Servicio 4', description: 'Descripción del servicio 4.', rating: 4 },
-            { id: 5, title: 'Servicio 5', description: 'Descripción del servicio 5.', rating: 4 },
-        ];
-        setServices(dummyServices);
+        const fetchServices = async () => {
+            try {
+                const result = await getServices();
+                setServices(result);
+            } catch (error) {
+                console.error('Error fetching services:', error);
+            }
+        };
+
+        fetchServices();
     }, []);
 
     const handleLogin = () => {
@@ -34,8 +34,8 @@ const HomeScreen = () => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('token'); // Remover el token del localStorage
-        setIsLoggedIn(false); // Actualizar el estado de isLoggedIn a falso
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
         navigate('/login');
     };
 
@@ -43,7 +43,6 @@ const HomeScreen = () => {
         if (!isLoggedIn) {
             navigate('/login');
         } else {
-            // Lógica para contactar con el proveedor de servicios
             console.log(`Contactar al proveedor de servicios: ${serviceId}`);
         }
     };
