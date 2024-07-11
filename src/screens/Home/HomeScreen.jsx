@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ServiceList from '../Services/ServiceList';
-import { obtenerServicios } from '../../fetching/services.fetching'; // Cambiado a obtenerServicios
+import { verificarToken } from '../../fetching/auth.fetching';
+import { obtenerServicios } from '../../fetching/service.fetching';
 
 const HomeScreen = () => {
     const navigate = useNavigate();
@@ -19,10 +20,11 @@ const HomeScreen = () => {
 
         const fetchServices = async () => {
             try {
-                const result = await obtenerServicios(); // Cambiado a obtenerServicios
-                setServices(result);
+                const servicios = await obtenerServicios();
+                console.log('Servicios obtenidos:', servicios); // Agregar console.log aquí
+                setServices(servicios);
             } catch (error) {
-                console.error('Error fetching services:', error);
+                console.error('Error al obtener servicios:', error); // Agregar console.error aquí
             }
         };
 
@@ -78,3 +80,5 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+
+
