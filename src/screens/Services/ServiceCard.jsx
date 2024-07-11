@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import './ServiceCard.css';
 
-const ServiceCard = ({ service, isAuthenticated, onWhatsAppClick }) => {
+const ServiceCard = ({ service, isLoggedIn, onWhatsAppClick }) => {
   const { title, description, rating, contactNumber } = service;
 
   const renderStars = () => {
@@ -17,7 +17,7 @@ const ServiceCard = ({ service, isAuthenticated, onWhatsAppClick }) => {
   };
 
   const handleWhatsAppClick = () => {
-    if (isAuthenticated) {
+    if (isLoggedIn) {
       // Si el usuario está autenticado, llama a la función para abrir WhatsApp
       onWhatsAppClick(contactNumber);
     } else {
@@ -27,7 +27,8 @@ const ServiceCard = ({ service, isAuthenticated, onWhatsAppClick }) => {
 
   return (
     <div className="card mb-4">
-      <img src="https://via.placeholder.com/300x200" className="card-img-top" alt={title} />
+
+      <img src={service.imagen_url ? service.imagen_url : "https://via.placeholder.com/300x200"} className="card-img-top" alt={title} />
       <div className="card-body">
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{description}</p>

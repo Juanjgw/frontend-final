@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ServiceList from '../Services/ServiceList';
 import { verificarToken } from '../../fetching/auth.fetching';
+import axios from "axios"
 
 const HomeScreen = () => {
     const navigate = useNavigate();
@@ -17,16 +18,13 @@ const HomeScreen = () => {
         } else {
             setIsLoggedIn(false);
         }
+axios.get ("http://localhost:4040/api/servicios?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlcGUxNDNAZ21haWwuY29tIiwidXNlcl9pZCI6NDgsImlhdCI6MTcyMDU5NTc5NywiZXhwIjoxNzIwNTk5Mzk3fQ.t8mC94nMwMzmQLVxGJ1cXsZuLbmpvw8nHnrbrXqHovM")
+       .then ((data)=> {
+        console.log(data)
 
-        // Cargar los servicios al montar el componente (dummyServices solo como ejemplo)
-        const dummyServices = [
-            { id: 1, title: 'Servicio 1', description: 'Descripción del servicio 1.', rating: 4 },
-            { id: 2, title: 'Servicio 2', description: 'Descripción del servicio 2.', rating: 4 },
-            { id: 3, title: 'Servicio 3', description: 'Descripción del servicio 3.', rating: 4 },
-            { id: 4, title: 'Servicio 4', description: 'Descripción del servicio 4.', rating: 4 },
-            { id: 5, title: 'Servicio 5', description: 'Descripción del servicio 5.', rating: 4 },
-        ];
-        setServices(dummyServices);
+        setServices(data.data.servicios)})
+
+       
     }, []);
 
     const handleLogin = () => {
@@ -73,7 +71,7 @@ const HomeScreen = () => {
                     />
                 </div>
             </div>
-            <ServiceList services={filteredServices} handleContact={handleContact} />
+            <ServiceList services={filteredServices} isLoggedIn={isLoggedIn} handleContact={handleContact} />
         </div>
     );
 };
