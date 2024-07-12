@@ -10,6 +10,9 @@ const HomeScreen = () => {
   const [services, setServices] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para manejar si el usuario está autenticado
 
+  const [page ,setPage] =useState(1)
+  const [totalServices ,setTotalServices]= useState()
+
   useEffect(() => {
     // Verificar si existe un token en localStorage para determinar si el usuario está autenticado
     const token = localStorage.getItem('token');
@@ -22,7 +25,18 @@ const HomeScreen = () => {
     axios.get("http://localhost:4040/api/servicios?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlcGUxNDNAZ21haWwuY29tIiwidXNlcl9pZCI6NDgsImlhdCI6MTcyMDU5NTc5NywiZXhwIjoxNzIwNTk5Mzk3fQ.t8mC94nMwMzmQLVxGJ1cXsZuLbmpvw8nHnrbrXqHovM")
       .then((data) => {
         console.log(data)
-        setServices(data.data.servicios)
+        let serviciosProcesados=data.data.servicios.map(servicio=> ({
+            ...servicio,
+            imagen_url:servicio.imagen_url?servicio.imagen_url.split(",").map(url=>url.trim()):[]
+        })) 
+        setTotalServices(serviciosProcesados);
+        let limit=page*20
+        let offset=(page*20)-20
+        let ServiciosPaginados = serviciosProcesados.slice(offset,offset+limit)
+
+
+
+         setServices(ServiciosPaginados)
       })
   }, []);
 
@@ -48,6 +62,32 @@ const HomeScreen = () => {
   const filteredServices = services.filter(service =>
     service.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+const handlePage=(action)=>{
+  if (action==="anterior")
+  {
+    let newpage=page-1
+    setPage(newpage)
+    let limit=newpage*20
+        let offset=(newpage*20)-20
+        let ServiciosPaginados = services.slice(offset,offset+limit)
+
+
+
+         setServices(ServiciosPaginados)
+  }
+  else{
+    let newpage=page+1
+    setPage(newpage)
+    let limit=newpage*20
+        let offset=(newpage*20)-20
+        let ServiciosPaginados = services.slice(offset,offset+limit)
+
+
+
+         setServices(ServiciosPaginados)
+  }
+}
+
 
   return (
     <div className="container">
@@ -77,8 +117,19 @@ const HomeScreen = () => {
         </div>
       </div>
       <ServiceList services={filteredServices} isLoggedIn={isLoggedIn} handleContact={handleContact} />
+   <button disabled={page==1} onClick={()=>handlePage("anterior")  } >  
+Anterior
+   </button>
+   <label>
+    {page}
+       </label>
+   <button disabled={page===Math.ceil(totalServices/20)} onClick={()=>handlePage("siguiente") }>
+Siguiente
+   </button>
     </div>
   );
 };
+
+
 
 export default HomeScreen;

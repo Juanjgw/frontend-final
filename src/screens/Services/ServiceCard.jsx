@@ -39,7 +39,7 @@ const ServiceCard = ({ service, isLoggedIn, onWhatsAppClick }) => {
     <div className="card mb-4">
       <div className="img-container">
         <img 
-          src={imagen_url || "https://via.placeholder.com/300x300"} 
+          src={imagen_url[0] || "https://via.placeholder.com/300x300"} 
           className="card-img-top" 
           alt={title} 
         />
