@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import LoginScreen from './screens/login/LoginScreen';
 import RegisterScreen from './screens/register/RegisterScreen';
 import HomeScreen from './screens/Home/HomeScreen';
+import ServiceDetail from './screens/Services/ServiceDetail';
 import { verificarToken } from './fetching/auth.fetching';
 
 const RouterApp = () => {
@@ -27,10 +28,9 @@ const RouterApp = () => {
             <Route path='/register' element={<RegisterScreen />} />
             <Route path='/' element={<HomeScreen />} />
             <Route path='/home' element={<HomeScreen />} />
+            <Route path='/service/:id' element={<ServiceDetail />} />
         </Routes>
     );
 };
 
 export default RouterApp;
-
-

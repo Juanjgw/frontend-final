@@ -1,0 +1,53 @@
+.service-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+  
+  .service-detail .img-container {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .service-detail .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .service-detail-body {
+    text-align: center;
+  }
+  
+  .service-detail-body h1 {
+    margin-bottom: 1rem;
+  }
+  
+  .service-detail-body p {
+    margin-bottom: 1.5rem;
+  }
+  
+  .company-logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .social-links a {
+    color: #000;
+  }
+  
+  .social-links a:hover {
+    color: #007bff;
+  }
+  

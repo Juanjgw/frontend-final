@@ -2,18 +2,66 @@
     background-color: #25D366; /* Color verde característico de WhatsApp */
     color: #FFFFFF; /* Color de texto blanco */
     border: none; /* Sin borde */
-    padding: 10px 20px; /* Padding */
-    font-size: 16px; /* Tamaño de fuente */
+    padding: 8px 16px; /* Padding más pequeño */
+    font-size: 14px; /* Tamaño de fuente más pequeño */
     cursor: pointer; /* Cambiar cursor a pointer al pasar por encima */
+    border-radius: 15px; /* Bordes redondeados */
+    margin-right: 10px; /* Margen a la derecha para espaciar los botones */
 }
 
 .whatsapp-button:hover {
     background-color: #128C7E; /* Color de fondo más oscuro al pasar el ratón */
 }
-.body{
-    background-color: #128C7E;
+
+.details-button {
+    background-color: #609ddd; /* Color azul para el botón de detalles */
+    color: #FFFFFF; /* Color de texto blanco */
+    border: none; /* Sin borde */
+    padding: 8px 16px; /* Padding más pequeño */
+    font-size: 14px; /* Tamaño de fuente más pequeño */
+    cursor: pointer; /* Cambiar cursor a pointer al pasar por encima */
+    border-radius: 10px; /* Bordes redondeados */
 }
-img{
-    width: 300px;
-    height: 200px;
+
+.details-button:hover {
+    background-color: #0056b3; /* Color de fondo más oscuro al pasar el ratón */
 }
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinear los botones al inicio */
+    margin-top: 10px; /* Espacio superior */
+}
+
+.card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas que se mostrarán antes de truncar */
+    -webkit-box-orient: vertical;
+}
+
+.img-container img {
+    width: 100%; /* Asegurarse de que la imagen ocupe todo el ancho del contenedor */
+    height: 300px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Ajustar la imagen para cubrir el área del contenedor */
+}
+
+  
+  
+  .card-title {
+    min-height: 3rem; /* Tamaño mínimo para el título, equivalente a dos líneas */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .card-description {
+    min-height: 4.5rem; /* Tamaño mínimo para la descripción, equivalente a tres líneas */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Reservar hasta 3 líneas para la descripción */
+    overflow: hidden;
+  }
+  

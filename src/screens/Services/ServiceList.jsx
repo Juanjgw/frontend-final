@@ -1,19 +1,22 @@
-// src/screens/Services/ServiceList.jsx
-
 import React from 'react';
-import ServiceCard from './ServiceCard'; // Importamos el componente ServiceCard
+import ServiceCard from './ServiceCard';
 
-const ServiceList = ({ services, isLoggedIn }) => {
+const ServiceList = ({ services, isLoggedIn, onWhatsAppClick }) => {
   return (
-    <div className="row">
-      {services.map(service => (
-        <div key={service.id} className="col-md-4">
-          <ServiceCard isLoggedIn = {isLoggedIn}service={service} /> {/* Renderizamos cada ServiceCard con datos de servicio */}
-        </div>
-      ))}
+    <div className="container">
+      <div className="row">
+        {services.map((service, index) => (
+          <div className="col-md-4" key={service.id || index}>
+            <ServiceCard
+              service={service}
+              isLoggedIn={isLoggedIn}
+              onWhatsAppClick={onWhatsAppClick}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
-
+};
 
 export default ServiceList;

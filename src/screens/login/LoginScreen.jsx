@@ -71,7 +71,7 @@ const LoginScreen = () => {
                                 </div>
                                 <button type='submit' className='btn btn-primary w-100 mb-3'>Iniciar sesión</button>
                             </form>
-                            <p className='text-center mb-0'>¿Aún no tienes cuenta? <Link to='/register'>Regístrate aquí</Link></p>
+                            <p className='text-center mb-0'>¿Aún no tienes cuenta? <Link to='/register'>Regístrate Gratis aquí</Link></p>
                             <div className='text-center mt-4'>
                                 <p>o inicia sesión con:</p>
                                 <button className='btn btn-danger mb-2 w-100'>
