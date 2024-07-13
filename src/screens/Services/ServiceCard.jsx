@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import './ServiceCard.css';
 
-const ServiceCard = ({ service, isLoggedIn, onWhatsAppClick }) => {
+const ServiceCard = ({ service, isLoggedIn }) => {
   const navigate = useNavigate();
   const { title, description, rating, contactNumber, imagen_url, id } = service;
 
@@ -19,15 +19,18 @@ const ServiceCard = ({ service, isLoggedIn, onWhatsAppClick }) => {
   };
 
   const handleWhatsAppClick = () => {
-    if (isLoggedIn) {
+
+    if (isLoggedIn && contactNumber) {
       const encodedMessage = encodeURIComponent(`Hola me contacto desde www.buscaConstructores.com.ar y necesito un presupuesto por ${title}`);
-      const whatsappUrl = `https://wa.me/${contactNumber}?text=${encodedMessage}`;
+      const whatsappUrl = `https://api.whatsapp.com/send/?phone=${contactNumber}&text=${encodedMessage}&type=phone_number&app_absent=0`;
       window.open(whatsappUrl, '_blank');
+    } else if (isLoggedIn && !contactNumber) {
+      console.error('El número de contacto no está definido en el servicio.');
     } else {
       navigate('/login');
     }
   };
-
+  
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + '...';
@@ -45,8 +48,8 @@ const ServiceCard = ({ service, isLoggedIn, onWhatsAppClick }) => {
         />
       </div>
       <div className="card-body">
-        <h5 className="card-title">{truncateText(title, 40)}</h5> {/* Truncar el título */}
-        <p className="card-text card-description">{truncateText(description, 210)}</p> {/* Truncar la descripción */}
+        <h5 className="card-title">{truncateText(title, 40)}</h5>
+        <p className="card-text card-description">{truncateText(description, 210)}</p>
         <div className="star-rating">{renderStars()}</div>
         <div className="button-container">
           <button onClick={handleWhatsAppClick} className="whatsapp-button">
