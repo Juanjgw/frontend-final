@@ -96,10 +96,15 @@ const HomeScreen = () => {
           <div>
             <h1 style={{ marginBottom: '0', fontSize: '28px' }}>Bienvenido! a Busca Constructores.</h1>
             <p style={{ margin: '0', fontStyle: 'italic' }}>Tu fuente de profesionales de confianza.</p>
+
           </div>
         </div>
         {isLoggedIn ? (
-          <button className="btn btn-danger" onClick={handleLogout}>Cerrar sesión</button>
+          <> <button onClick={()=>
+            navigate("/ABM_Servicios")
+          }>Mis Servicios </button> 
+          <button className="btn btn-danger" onClick={handleLogout}>Cerrar sesión</button></>
+          
         ) : (
           <button className="btn btn-primary" onClick={handleLogin}>Iniciar sesión</button>
         )}
