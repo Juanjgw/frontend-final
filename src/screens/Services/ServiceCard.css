@@ -44,7 +44,7 @@
 
 .img-container img {
     width: 100%; /* Asegurarse de que la imagen ocupe todo el ancho del contenedor */
-    height: 300px; /* Altura fija para las imágenes */
+    height: 250px; /* Altura fija para las imágenes */
     object-fit: cover; /* Ajustar la imagen para cubrir el área del contenedor */
 }
 

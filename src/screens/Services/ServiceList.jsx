@@ -1,16 +1,16 @@
 import React from 'react';
 import ServiceCard from './ServiceCard';
 
-const ServiceList = ({ services, isLoggedIn, onWhatsAppClick }) => {
+const ServiceList = ({ services, isLoggedIn, handleContact }) => {
   return (
     <div className="container">
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         {services.map((service, index) => (
           <div className="col" key={service.id || index}>
             <ServiceCard
               service={service}
               isLoggedIn={isLoggedIn}
-              onWhatsAppClick={onWhatsAppClick}
+              onContact={handleContact}
             />
           </div>
         ))}
@@ -20,3 +20,4 @@ const ServiceList = ({ services, isLoggedIn, onWhatsAppClick }) => {
 };
 
 export default ServiceList;
+
