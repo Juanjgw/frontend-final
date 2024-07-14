@@ -101,7 +101,7 @@ const HomeScreen = () => {
         </div>
         {isLoggedIn ? (
           <> <button onClick={()=>
-            navigate("/ABM_Servicios")
+            navigate("/ABM_Servicios/NuevoServicio")
           }>Mis Servicios </button> 
           <button className="btn btn-danger" onClick={handleLogout}>Cerrar sesión</button></>
           
