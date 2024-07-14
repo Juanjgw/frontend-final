@@ -1,0 +1,27 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nuevo-servicio {
+    margin-top: 10px;
+}
+
+.description-cell {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.button-icon {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.button-icon:hover {
+    background: none;
+}
