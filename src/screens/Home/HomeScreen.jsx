@@ -27,7 +27,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
-
+console.log(token)
     const updateServicesPerPage = () => {
       setServicesPerPage(calculateServicesPerPage());
     };

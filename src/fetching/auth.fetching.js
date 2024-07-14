@@ -8,7 +8,10 @@ export const login = async (usuario) => {
         if (!result.ok) {
             throw { status: result.status, message: result.message }; // Mejora en el manejo de errores
         } else {
-            localStorage.setItem('token', result.token); // Asegúrate de que result.token esté definido
+            console.log(result)
+            localStorage.setItem('token', result.token);
+            let usuario= JSON.stringify(result.usuario)
+            localStorage.setItem('usuario',usuario)
             return result;
         }
     } catch (error) {

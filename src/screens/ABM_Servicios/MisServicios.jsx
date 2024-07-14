@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Table, Button, Modal, Form, Alert } from 'react-bootstrap';
+import { URL } from '../../fetching/http';
 
 const MisServicios = () => {
     const navigate = useNavigate();
@@ -21,9 +22,12 @@ const MisServicios = () => {
 
     const fetchServicios = async () => {
         try {
-            const response = await axios.get('http://localhost:4040/api/mis-servicios');
+            const usuario= JSON.parse (localStorage.getItem("usuario"))
+           
+             const response = await axios.get(URL.URL_API +'/api/servicios/servicios_usuario/'+usuario.id);
             setServicios(response.data);
             setError('');
+
         } catch (error) {
             setError('Error al cargar los servicios.');
         }
@@ -31,7 +35,7 @@ const MisServicios = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:4040/api/mis-servicios/${id}`);
+            await axios.delete(URL.URL_API +'/api/servicios/'+id);
             fetchServicios();
         } catch (error) {
             setError('Error al eliminar el servicio.');
@@ -68,8 +72,8 @@ const MisServicios = () => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`http://localhost:4040/api/mis-servicios/${serviceToUpdate.id}`, serviceToUpdate);
-            fetchServicios();
+            await axios.put(URL.URL_API +'/api/servicios/'+serviceToUpdate.id,{title:serviceToUpdate.title, description:serviceToUpdate.description, contactNumber:serviceToUpdate.contactNumber});
+              fetchServicios();
             setShowModal(false);
         } catch (error) {
             setError('Error al actualizar el servicio.');
