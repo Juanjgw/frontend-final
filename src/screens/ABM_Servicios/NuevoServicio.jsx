@@ -5,12 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import './NuevoServicio.css'; // Archivo de estilos CSS personalizados
 
 const NuevoServicio = () => {
-    
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [service, setService] = useState({
         title: '',
         description: '',
-        contactNumber: ''
+        contactNumber: '+54'
     });
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -22,12 +21,12 @@ const NuevoServicio = () => {
             console.log('Servicio creado:', response.data);
             setSuccessMessage('¡Servicio creado exitosamente!');
             setError('');
-            setService({ // Limpiar el formulario después de crear el servicio
+            setService({
                 title: '',
                 description: '',
-                contactNumber: ''
+                contactNumber: '+54'
             });
-            setDescriptionLength(0); // Reiniciar contador de caracteres
+            setDescriptionLength(0);
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setError(error.response.data.message);
@@ -39,17 +38,42 @@ const NuevoServicio = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+
         if (name === 'description') {
-            setDescriptionLength(value.length); // Actualizar longitud de la descripción
+            setDescriptionLength(value.length);
+            setService((prevService) => ({
+                ...prevService,
+                description: value,
+            }));
+        } else if (name === 'contactNumber') {
+            // Verificar y mantener el prefijo '+54' y permitir solo números después del prefijo
+            const numberValue = value.replace(/\D/g, ''); // Remover cualquier caracter no numérico
+            if (!numberValue.startsWith('54')) {
+                setService((prevService) => ({
+                    ...prevService,
+                    contactNumber: '+54'
+                }));
+            } else {
+                setService((prevService) => ({
+                    ...prevService,
+                    contactNumber: '+' + numberValue
+                }));
+            }
+        } else {
+            setService((prevService) => ({
+                ...prevService,
+                [name]: value,
+            }));
         }
-        setService({ ...service, [name]: value });
+
         setError('');
         setSuccessMessage('');
     }
-   
+
     const handleCancel = () => {
         navigate('/');
-            }
+    }
+
     return (
         <div className="formulario-servicio">
             <h2>Nuevo Servicio</h2>
