@@ -11,27 +11,26 @@ import EditarServicio from './screens/ABM_Servicios/EditarServicio';
 import MisServicios from './screens/ABM_Servicios/MisServicios'; // Asegúrate de importar MisServicios
 
 const RouterApp = () => {
-    const navigate = useNavigate();
+	const navigate = useNavigate()
+	useEffect(() => {
+		verificarToken()
+			.then(resultado => {
+				if (resultado.status == 200) {
+					navigate('/home')
+				}
+				else {
+					navigate('/login')
+				}
+			})
+	}
+	, []
+	)
 
-    useEffect(() => {
-        const checkTokenAndNavigate = async () => {
-            try {
-                const result = await verificarToken();
-                if (result && result.ok) {
-                    navigate('/home');
-                } else {
-                    navigate('/');
-                }
-            } catch (error) {
-                navigate('/');
-            }
-        };
 
-        checkTokenAndNavigate();
-    }, [navigate]);
 
-    return (
-        <Routes>
+
+	return (
+		<Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
@@ -40,9 +39,9 @@ const RouterApp = () => {
             <Route path="/service/:id" element={<ServiceDetail />} />
             <Route path="/ABM_Servicios/editarServicio/:id" element={<EditarServicio />} />
             <Route path="/ABM_Servicios/MisServicios" element={<MisServicios />} /> {/* Ruta para MisServicios */}
-        </Routes>
-    );
-};
+		</Routes>
+	)
+}
 
-export default RouterApp;
+export default RouterApp
 
