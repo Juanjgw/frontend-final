@@ -14,7 +14,7 @@ const NuevoServicio = () => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [descriptionLength, setDescriptionLength] = useState(0);
-    const [images, setImages] = useState([]);
+    const [image, setImage] = useState(null); // Cambiado para una sola imagen
 
     const handlePost = async () => {
         try {
@@ -26,14 +26,16 @@ const NuevoServicio = () => {
             console.log('Servicio creado:', response.data);
             setSuccessMessage('¡Servicio creado exitosamente!');
             setError('');
-            const servicioId = response.data.servicio_id;
-            await handleImageUpload(servicioId); // Subir imágenes después de crear el servicio
+            console.log(response)
+            const servicioId = response.data.idCreado;
+            await handleImageUpload(servicioId); // Subir imagen después de crear el servicio
             setService({
                 title: '',
                 description: '',
                 contactNumber: '+54'
             });
             setDescriptionLength(0);
+            setImage(null); // Resetear la imagen después de subir
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setError(error.response.data.message);
@@ -44,30 +46,28 @@ const NuevoServicio = () => {
     };
 
     const handleImageUpload = async (serviceId) => {
-        if (images.length === 0) {
-            setError('Por favor, selecciona al menos una imagen.');
+        if (!image) {
+            setError('Por favor, selecciona una imagen.');
             return;
         }
 
         const formData = new FormData();
-        images.forEach((image, index) => {
-            formData.append('images', image);
-            formData.append('imageNames', `${serviceId}-${index + 1}`);
-        });
-
+        formData.append('imagen', image);
+        console.log([...formData])
         try {
+            
             await axios.post(`http://localhost:4041/api/servicios/${serviceId}/imagenes`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            setSuccessMessage('¡Imágenes subidas y registradas exitosamente!');
+            setSuccessMessage('¡Imagen subida y registrada exitosamente!');
             setError('');
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setError(error.response.data.message);
             } else {
-                setError('Error al intentar subir las imágenes');
+                setError('Error al intentar subir la imagen');
             }
         }
     };
@@ -88,12 +88,14 @@ const NuevoServicio = () => {
         setSuccessMessage('');
     };
 
+    
     const handleFileChange = (event) => {
-        setImages([...event.target.files]);
+        console.log(event.target.files)
+        setImage(event.target.files[0]); // Cambiado para una sola imagen
     };
 
     const handleCancel = () => {
-        navigate('/');
+        navigate("/ABM_Servicios/MisServicios");
     };
 
     return (
@@ -129,8 +131,8 @@ const NuevoServicio = () => {
                     <Form.Control type="text" name="contactNumber" value={service.contactNumber} onChange={handleChange} />
                 </Form.Group>
                 <Form.Group controlId="formFile">
-                    <Form.Label>Imágenes del Servicio (hasta 5)</Form.Label>
-                    <Form.Control type="file" multiple onChange={handleFileChange} />
+                    <Form.Label>Imagen del Servicio</Form.Label>
+                    <Form.Control type="file" onChange={handleFileChange} />
                 </Form.Group>
                 <div className="button-container">
                     <Button variant="secondary" onClick={handleCancel} className="btn-cancelar">
