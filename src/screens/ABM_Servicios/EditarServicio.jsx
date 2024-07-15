@@ -19,7 +19,7 @@ const EditarServicio = () => {
     useEffect(() => {
         const fetchService = async () => {
             try {
-                const response = await axios.get(`http://localhost:4040/api/servicios/${id}`);
+                const response = await axios.get(`http://localhost:4041/api/servicios/${id}`);
                 setService(response.data);
                 setDescriptionLength(response.data.description.length);
             } catch (error) {
@@ -32,7 +32,7 @@ const EditarServicio = () => {
 
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`http://localhost:4040/api/servicios/${id}`, service);
+            const response = await axios.put(`http://localhost:4041/api/servicios/${id}`, service);
             console.log('Servicio actualizado:', response.data);
             setSuccessMessage('¡Servicio actualizado exitosamente!');
             setError('');

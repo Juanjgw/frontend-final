@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './NuevoServicio.css'; // Archivo de estilos CSS personalizados
 
 const NuevoServicio = () => {
@@ -14,13 +14,20 @@ const NuevoServicio = () => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [descriptionLength, setDescriptionLength] = useState(0);
+    const [images, setImages] = useState([]);
 
     const handlePost = async () => {
         try {
-            const response = await axios.post('http://localhost:4040/api/servicios', service);
+            const usuario = JSON.parse(localStorage.getItem("usuario"));
+            const response = await axios.post('http://localhost:4041/api/servicios', {
+                ...service,
+                Usuario_ID: usuario.id // Incluir el ID del usuario actual
+            });
             console.log('Servicio creado:', response.data);
             setSuccessMessage('¡Servicio creado exitosamente!');
             setError('');
+            const servicioId = response.data.servicio_id;
+            await handleImageUpload(servicioId); // Subir imágenes después de crear el servicio
             setService({
                 title: '',
                 description: '',
@@ -34,45 +41,60 @@ const NuevoServicio = () => {
                 setError('Error al intentar crear el servicio');
             }
         }
-    }
+    };
+
+    const handleImageUpload = async (serviceId) => {
+        if (images.length === 0) {
+            setError('Por favor, selecciona al menos una imagen.');
+            return;
+        }
+
+        const formData = new FormData();
+        images.forEach((image, index) => {
+            formData.append('images', image);
+            formData.append('imageNames', `${serviceId}-${index + 1}`);
+        });
+
+        try {
+            await axios.post(`http://localhost:4041/api/servicios/${serviceId}/imagenes`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            setSuccessMessage('¡Imágenes subidas y registradas exitosamente!');
+            setError('');
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                setError('Error al intentar subir las imágenes');
+            }
+        }
+    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
 
         if (name === 'description') {
             setDescriptionLength(value.length);
-            setService((prevService) => ({
-                ...prevService,
-                description: value,
-            }));
-        } else if (name === 'contactNumber') {
-            // Verificar y mantener el prefijo '+54' y permitir solo números después del prefijo
-            const numberValue = value.replace(/\D/g, ''); // Remover cualquier caracter no numérico
-            if (!numberValue.startsWith('54')) {
-                setService((prevService) => ({
-                    ...prevService,
-                    contactNumber: '+54'
-                }));
-            } else {
-                setService((prevService) => ({
-                    ...prevService,
-                    contactNumber: '+' + numberValue
-                }));
-            }
-        } else {
-            setService((prevService) => ({
-                ...prevService,
-                [name]: value,
-            }));
         }
+
+        setService((prevService) => ({
+            ...prevService,
+            [name]: value,
+        }));
 
         setError('');
         setSuccessMessage('');
-    }
+    };
+
+    const handleFileChange = (event) => {
+        setImages([...event.target.files]);
+    };
 
     const handleCancel = () => {
         navigate('/');
-    }
+    };
 
     return (
         <div className="formulario-servicio">
@@ -106,7 +128,10 @@ const NuevoServicio = () => {
                     <Form.Label>Número de Contacto</Form.Label>
                     <Form.Control type="text" name="contactNumber" value={service.contactNumber} onChange={handleChange} />
                 </Form.Group>
-                  
+                <Form.Group controlId="formFile">
+                    <Form.Label>Imágenes del Servicio (hasta 5)</Form.Label>
+                    <Form.Control type="file" multiple onChange={handleFileChange} />
+                </Form.Group>
                 <div className="button-container">
                     <Button variant="secondary" onClick={handleCancel} className="btn-cancelar">
                         Cancelar
@@ -123,5 +148,3 @@ const NuevoServicio = () => {
 }
 
 export default NuevoServicio;
-
-

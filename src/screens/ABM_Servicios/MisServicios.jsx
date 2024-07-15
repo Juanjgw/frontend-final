@@ -27,6 +27,7 @@ const MisServicios = () => {
     const fetchServicios = async () => {
         try {
             const usuario = JSON.parse(localStorage.getItem("usuario"));
+            
             const response = await axios.get(`${URL.URL_API}/api/servicios/servicios_usuario/${usuario.id}`);
             setServicios(response.data);
             setError('');
