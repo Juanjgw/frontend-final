@@ -1,29 +1,32 @@
-import React from 'react';
+import React, {useState,useEffect}from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 import './ServiceDetail.css';
+import { URL } from '../../fetching/http';
 
 const ServiceDetail = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [service, setService] = React.useState(null);
-  const [error, setError] = React.useState('');
+  const [service, setService] = useState(null);
+  const [error, setError] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchService = async () => {
       try {
-        const response = await axios.get(`https://api.example.com/services/${id}`);
-        setService(response.data);
+        const response = await axios.get(URL.URL_API +`/api/servicios/${id}`);
+        setService(response.data.servicio);
         setError('');
+        console.log(response)
       } catch (error) {
         setError('Error al cargar el servicio.');
       }
     };
 
     fetchService();
-  }, [id]);
+  }, []);
 
   const renderStars = (rating) => {
     return Array(5)
@@ -77,7 +80,7 @@ const ServiceDetail = ({ isLoggedIn }) => {
       </div>
       <div className="card-body">
         <h5 className="card-title">{truncateText(service.title, 40)}</h5>
-        <p className="card-text card-description">{truncateText(service.description, 210)}</p>
+        <p className="card-text card-description">{service.description}</p>
         <div className="star-rating">{renderStars(service.rating)}</div>
         <div className="button-container">
           <button onClick={handleWhatsAppClick} className="whatsapp-button">
