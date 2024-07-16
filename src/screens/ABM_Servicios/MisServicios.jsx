@@ -13,12 +13,14 @@ const MisServicios = () => {
     const [servicios, setServicios] = useState([]);
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [serviceToUpdate, setServiceToUpdate] = useState({
         id: '',
         title: '',
         description: '',
         contactNumber: '',
     });
+    const [serviceToDelete, setServiceToDelete] = useState(null);
 
     useEffect(() => {
         fetchServicios();
@@ -27,7 +29,6 @@ const MisServicios = () => {
     const fetchServicios = async () => {
         try {
             const usuario = JSON.parse(localStorage.getItem("usuario"));
-            
             const response = await axios.get(`${URL.URL_API}/api/servicios/servicios_usuario/${usuario.id}`);
             setServicios(response.data);
             setError('');
@@ -36,10 +37,16 @@ const MisServicios = () => {
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = (servicio) => {
+        setServiceToDelete(servicio);
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = async () => {
         try {
-            await axios.delete(`${URL.URL_API}/api/servicios/${id}`);
+            await axios.delete(`${URL.URL_API}/api/servicios/${serviceToDelete.id}`);
             fetchServicios();
+            setShowDeleteModal(false);
         } catch (error) {
             setError('Error al eliminar el servicio.');
         }
@@ -63,6 +70,11 @@ const MisServicios = () => {
             description: '',
             contactNumber: '',
         });
+    };
+
+    const handleCloseDeleteModal = () => {
+        setShowDeleteModal(false);
+        setServiceToDelete(null);
     };
 
     const handleChange = (event) => {
@@ -91,17 +103,22 @@ const MisServicios = () => {
         <div className="container">
             <div className="header">
                 <h2>Mis Servicios</h2>
-                <Link to="/ABM_Servicios/NuevoServicio" className="btn btn-primary nuevo-servicio">
-                    Nuevo Servicio
-                </Link>
+                <div className="header-buttons">
+                    <Link to="/ABM_Servicios/NuevoServicio" className="btn btn-primary nuevo-servicio">
+                        Nuevo Servicio
+                    </Link>
+                    <Button className="btn btn-secondary" onClick={() => navigate('/home')}>
+                        Ir a Home
+                    </Button>
+                </div>
             </div>
             {error && <Alert variant="danger">{error}</Alert>}
             <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th>Título</th>
-                        <th>Descripción</th>
-                        <th>Número de Contacto</th>
+                        <th className="description-cell">Descripción</th>
+                        <th className="contact-cell">Número de Contacto</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -110,12 +127,12 @@ const MisServicios = () => {
                         <tr key={servicio.id}>
                             <td>{servicio.title}</td>
                             <td className="description-cell">{servicio.description}</td>
-                            <td>{servicio.contactNumber}</td>
+                            <td className="contact-cell">{servicio.contactNumber}</td>
                             <td>
                                 <Button variant="primary" className="button-icon" onClick={() => handleEdit(servicio)}>
                                     <FontAwesomeIcon icon={faEdit} />
                                 </Button>{' '}
-                                <Button variant="danger" className="button-icon" onClick={() => handleDelete(servicio.id)}>
+                                <Button variant="danger" className="button-icon" onClick={() => handleDelete(servicio)}>
                                     <FontAwesomeIcon icon={faTrash} />
                                 </Button>
                             </td>
@@ -150,6 +167,23 @@ const MisServicios = () => {
                     </Button>
                     <Button variant="primary" onClick={handleUpdate}>
                         Guardar Cambios
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmar Eliminación</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    ¿Estás seguro de que deseas eliminar este servicio?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                        Cancelar
+                    </Button>
+                    <Button variant="danger" onClick={confirmDelete}>
+                        Eliminar
                     </Button>
                 </Modal.Footer>
             </Modal>

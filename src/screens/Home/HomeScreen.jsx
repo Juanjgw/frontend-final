@@ -10,54 +10,38 @@ const HomeScreen = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [page, setPage] = useState(1);
   const [totalServices, setTotalServices] = useState(0);
-  const [servicesPerPage, setServicesPerPage] = useState(18);
-
-  const [allService , setAllService] = useState ([])
-
-  const calculateServicesPerPage = () => {
-    const width = window.innerWidth;
-    let columns = 1;
-
-    if (width >= 1200) columns = 5;
-    else if (width >= 992) columns = 4;
-    else if (width >= 768) columns = 3;
-    else if (width >= 576) columns = 2;
-
-    return columns >= 3 ? 18 : 20;
-  };
+  const servicesPerPage = 12; // Número fijo de servicios por página
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
-console.log(token)
-    const updateServicesPerPage = () => {
-      setServicesPerPage(calculateServicesPerPage());
-    };
-
-    window.addEventListener('resize', updateServicesPerPage);
-    updateServicesPerPage();
 
     fetchServices(page);
 
     return () => {
-      window.removeEventListener('resize', updateServicesPerPage);
+      // Limpiar cualquier suscripción o listener si es necesario
     };
   }, [page]);
 
-  const fetchServices = (page) => {
-    axios.get("http://localhost:4041/api/servicios?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlcGUxNDNAZ21haWwuY29tIiwidXNlcl9pZCI6NDgsImlhdCI6MTcyMDU5NTc5NywiZXhwIjoxNzIwNTk5Mzk3fQ.t8mC94nMwMzmQLVxGJ1cXsZuLbmpvw8nHnrbrXqHovM")
-      .then((data) => {
-        let serviciosProcesados = data.data.servicios.map(servicio => ({
+  const fetchServices = (currentPage) => {
+    axios.get("http://localhost:4041/api/servicios", {
+      params: {
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlcGUxNDNAZ21haWwuY29tIiwidXNlcl9pZCI6NDgsImlhdCI6MTcyMDU5NTc5NywiZXhwIjoxNzIwNTk5Mzk3fQ.t8mC94nMwMzmQLVxGJ1cXsZuLbmpvw8nHnrbrXqHovM',
+        limit: servicesPerPage,
+        offset: (currentPage - 1) * servicesPerPage
+      }
+    })
+      .then((response) => {
+        const { servicios } = response.data;
+        const serviciosProcesados = servicios.map(servicio => ({
           ...servicio,
           imagen_url: servicio.imagen_url ? servicio.imagen_url.split(",").map(url => url.trim()) : []
         }));
-setAllService(serviciosProcesados)
-        setTotalServices(serviciosProcesados.length);
-        let limit = servicesPerPage;
-        let offset = (page - 1) * servicesPerPage;
-        let ServiciosPaginados = serviciosProcesados.slice(offset, offset + limit);
-
-        setServices(ServiciosPaginados);
+        setServices(serviciosProcesados);
+        setTotalServices(servicios.length); // Total de servicios en la respuesta actual
+      })
+      .catch((error) => {
+        console.error('Error fetching services:', error);
       });
   };
 
@@ -75,10 +59,11 @@ setAllService(serviciosProcesados)
     if (!isLoggedIn) {
       navigate('/login');
     } else {
-      }
+      // Lógica para contactar al servicio
+    }
   };
 
-  const filteredServices = allService.filter(service =>
+  const filteredServices = services.filter(service =>
     service.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -96,7 +81,7 @@ setAllService(serviciosProcesados)
         <div className="d-flex align-items-center">
           <img src="https://eshopcompany.com/imagenes/logo.JPG" alt="Logo" style={{ height: '50px', marginRight: '10px' }} />
           <div>
-            <h1 style={{ marginBottom: '0', fontSize: '28px' }}>Bienvenido! a Busca Constructores.</h1>
+            <h1 style={{ marginBottom: '0', fontSize: '28px' }}>Bienvenido a Busca Constructores.</h1>
             <p style={{ margin: '0', fontStyle: 'italic' }}>Tu fuente de profesionales de confianza.</p>
           </div>
         </div>
@@ -121,7 +106,8 @@ setAllService(serviciosProcesados)
         </div>
       </div>
       
-      {allService.length &&<ServiceList services={filteredServices} isLoggedIn={isLoggedIn} handleContact={handleContact} />}
+      <ServiceList services={filteredServices} isLoggedIn={isLoggedIn} handleContact={handleContact} />
+
       <div className="d-flex justify-content-between align-items-center my-4">
         <button 
           className="btn btn-secondary"

@@ -1,4 +1,6 @@
-# React + Vite
+Proyecto Busca constructores
+
+sitio web donde se los usuarios pueden buscar un servicio de un constructor o puede ofrecer sus distintos servicios, los usuarios solo pueden crear ver y editar solo sus servicios. El usuario que esta buscando un servicio puede ver los servicios sin estar logeado, al intentar enviar whatsapp le pedira que se logue, esto me permitira tener en el futuro un registro de las personas que intentan contactar los servicios. 
 
 
 
