@@ -1,0 +1,33 @@
+.formulario-servicio {
+    max-width: 600px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.recomendaciones {
+    margin-bottom: 20px;
+}
+
+.descripcion-textarea {
+    height: 100px; /* Ajusta la altura según tus necesidades */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-cancelar {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.btn-crear {
+    flex: 1;
+    margin-left: 10px;
+}
+

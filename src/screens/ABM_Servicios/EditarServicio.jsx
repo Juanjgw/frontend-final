@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
-import './NuevoServicio.css'; // Archivo de estilos CSS personalizados
+import './EditarServicio.css'; // Archivo de estilos CSS personalizados
 
 const EditarServicio = () => {
     const { id } = useParams();
@@ -15,6 +15,7 @@ const EditarServicio = () => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [descriptionLength, setDescriptionLength] = useState(0);
+    const [image, setImage] = useState(null); // Cambiado para una sola imagen
 
     useEffect(() => {
         const fetchService = async () => {
@@ -36,6 +37,7 @@ const EditarServicio = () => {
             console.log('Servicio actualizado:', response.data);
             setSuccessMessage('¡Servicio actualizado exitosamente!');
             setError('');
+            await handleImageUpload(id); // Subir imagen después de actualizar el servicio
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setError(error.response.data.message);
@@ -45,42 +47,54 @@ const EditarServicio = () => {
         }
     };
 
+    const handleImageUpload = async (serviceId) => {
+        if (!image) {
+            return; // Si no hay imagen seleccionada, no hacer nada
+        }
+
+        const formData = new FormData();
+        formData.append('imagen', image);
+        console.log([...formData]);
+        try {
+            await axios.post(`http://localhost:4041/api/servicios/${serviceId}/imagenes`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            setSuccessMessage('¡Imagen subida y registrada exitosamente!');
+            setError('');
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                setError('Error al intentar subir la imagen');
+            }
+        }
+    };
+
     const handleChange = (event) => {
         const { name, value } = event.target;
 
         if (name === 'description') {
             setDescriptionLength(value.length);
-            setService((prevService) => ({
-                ...prevService,
-                description: value,
-            }));
-        } else if (name === 'contactNumber') {
-            // Verificar y mantener el prefijo '+54' y permitir solo números después del prefijo
-            const numberValue = value.replace(/\D/g, ''); // Remover cualquier caracter no numérico
-            if (!numberValue.startsWith('54')) {
-                setService((prevService) => ({
-                    ...prevService,
-                    contactNumber: '+54'
-                }));
-            } else {
-                setService((prevService) => ({
-                    ...prevService,
-                    contactNumber: '+' + numberValue
-                }));
-            }
-        } else {
-            setService((prevService) => ({
-                ...prevService,
-                [name]: value,
-            }));
         }
+
+        setService((prevService) => ({
+            ...prevService,
+            [name]: value,
+        }));
 
         setError('');
         setSuccessMessage('');
     };
 
+    const handleFileChange = (event) => {
+        console.log(event.target.files);
+        setImage(event.target.files[0]); // Cambiado para una sola imagen
+    };
+
     const handleCancel = () => {
-        navigate('/');
+        navigate("/ABM_Servicios/MisServicios");
     };
 
     return (
@@ -115,7 +129,10 @@ const EditarServicio = () => {
                     <Form.Label>Número de Contacto</Form.Label>
                     <Form.Control type="text" name="contactNumber" value={service.contactNumber} onChange={handleChange} />
                 </Form.Group>
-
+                <Form.Group controlId="formFile">
+                    <Form.Label>Imagen del Servicio</Form.Label>
+                    <Form.Control type="file" onChange={handleFileChange} />
+                </Form.Group>
                 <div className="button-container">
                     <Button variant="secondary" onClick={handleCancel} className="btn-cancelar">
                         Cancelar

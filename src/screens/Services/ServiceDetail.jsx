@@ -17,7 +17,7 @@ const ServiceDetail = ({ services }) => {
   return (
     <div className="service-detail">
       <div className="img-container">
-        <img src={"https://eshopcompany.com/Servicios/" + imagen_url || "https://via.placeholder.com/300x300"} alt={title} />
+        <img src={("https://eshopcompany.com/Servicios/" + imagen_url) || "https://via.placeholder.com/300x300"} alt={title} />
       </div>
       <div className="service-detail-body">
         <h1>{title}</h1>
