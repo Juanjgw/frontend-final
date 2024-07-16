@@ -20,13 +20,13 @@ const HomeScreen = () => {
     const width = window.innerWidth;
     let columns = 1;
 
-
+console.log(width)
     if (width >= 1200) columns = 5;
     else if (width >= 992) columns = 4;
     else if (width >= 768) columns = 3;
     else if (width >= 576) columns = 2;
 
-
+console.log(columns)
     return columns === 3 ? 18 : 20;
   };
 
@@ -219,8 +219,6 @@ const HomeScreen = () => {
 
 
 export default HomeScreen;
-
-
 
 
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './NuevoServicio.css'; // Archivo de estilos CSS personalizados
-
+import { URL } from '../../fetching/http';
 const NuevoServicio = () => {
     const navigate = useNavigate();
     const [service, setService] = useState({
@@ -19,7 +19,7 @@ const NuevoServicio = () => {
     const handlePost = async () => {
         try {
             const usuario = JSON.parse(localStorage.getItem("usuario"));
-            const response = await axios.post('http://localhost:4041/api/servicios', {
+            const response = await axios.post(URL.URL_API +'/api/servicios', {
                 ...service,
                 Usuario_ID: usuario.id // Incluir el ID del usuario actual
             });
@@ -56,7 +56,7 @@ const NuevoServicio = () => {
         console.log([...formData])
         try {
             
-            await axios.post(`http://localhost:4041/api/servicios/${serviceId}/imagenes`, formData, {
+            await axios.post(URL.URL_API +`/api/servicios/${serviceId}/imagenes`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
