@@ -12,6 +12,8 @@ const HomeScreen = () => {
   const [totalServices, setTotalServices] = useState(0);
   const [servicesPerPage, setServicesPerPage] = useState(18);
 
+  const [allService , setAllService] = useState ([])
+
   const calculateServicesPerPage = () => {
     const width = window.innerWidth;
     let columns = 1;
@@ -49,7 +51,7 @@ console.log(token)
           ...servicio,
           imagen_url: servicio.imagen_url ? servicio.imagen_url.split(",").map(url => url.trim()) : []
         }));
-
+setAllService(serviciosProcesados)
         setTotalServices(serviciosProcesados.length);
         let limit = servicesPerPage;
         let offset = (page - 1) * servicesPerPage;
@@ -76,7 +78,7 @@ console.log(token)
       }
   };
 
-  const filteredServices = services.filter(service =>
+  const filteredServices = allService.filter(service =>
     service.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -118,7 +120,8 @@ console.log(token)
           />
         </div>
       </div>
-      <ServiceList services={filteredServices} isLoggedIn={isLoggedIn} handleContact={handleContact} />
+      
+      {allService.length &&<ServiceList services={filteredServices} isLoggedIn={isLoggedIn} handleContact={handleContact} />}
       <div className="d-flex justify-content-between align-items-center my-4">
         <button 
           className="btn btn-secondary"
