@@ -7,8 +7,7 @@ import HomeScreen from './screens/Home/HomeScreen';
 import ServiceDetail from './screens/Services/ServiceDetail';
 
 import NuevoServicio from './screens/ABM_Servicios/NuevoServicio';
-import EditarServicio from './screens/ABM_Servicios/EditarServicio';
-import MisServicios from './screens/ABM_Servicios/MisServicios'; // Asegúrate de importar MisServicios
+import MisServicios from './screens/ABM_Servicios/MisServicios'; 
 
 const RouterApp = () => {
 	const navigate = useNavigate()
@@ -37,7 +36,6 @@ const RouterApp = () => {
             <Route path="/home" element={<HomeScreen />} />
             <Route path="/ABM_Servicios/NuevoServicio" element={<NuevoServicio />} />
             <Route path="/service/:id" element={<ServiceDetail />} />
-            <Route path="/ABM_Servicios/editarServicio/:id" element={<EditarServicio />} />
             <Route path="/ABM_Servicios/MisServicios" element={<MisServicios />} /> {/* Ruta para MisServicios */}
 		</Routes>
 	)
