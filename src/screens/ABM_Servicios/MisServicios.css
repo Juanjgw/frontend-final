@@ -1,0 +1,58 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nuevo-servicio {
+    margin-top: 10px;
+}
+
+.description-cell {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.button-icon {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.button-icon:hover {
+    background: none;
+}
+
+
+
+@media (max-width: 576px) {
+    .description-cell,
+    .contact-cell {
+        display: none;
+    }
+}
+
+/* MisServicios.css */
+.container {
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 100px; /* Ajusta este valor para el espaciado entre los botones */
+}
+
+.nuevo-servicio {
+    margin-left: auto; 
+    margin-right: 40px; 
+}

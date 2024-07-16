@@ -19,9 +19,8 @@ const ServiceCard = ({ service, isLoggedIn }) => {
   };
 
   const handleWhatsAppClick = () => {
-
     if (isLoggedIn && contactNumber) {
-      const encodedMessage = encodeURIComponent(`Hola me contacto desde www.buscaConstructores.com.ar y necesito un presupuesto por ${title}`);
+      const encodedMessage = encodeURIComponent(`Hola, me contacto desde www.buscaConstructores.com.ar y necesito un presupuesto por ${title}`);
       const whatsappUrl = `https://api.whatsapp.com/send/?phone=${contactNumber}&text=${encodedMessage}&type=phone_number&app_absent=0`;
       window.open(whatsappUrl, '_blank');
     } else if (isLoggedIn && !contactNumber) {
@@ -38,11 +37,13 @@ const ServiceCard = ({ service, isLoggedIn }) => {
     return text;
   };
 
+  const imageUrl = imagen_url && imagen_url[0] ? `https://eshopcompany.com/Servicios/${imagen_url[0]}` : "https://via.placeholder.com/300x300";
+
   return (
     <div className="card mb-4">
       <div className="img-container">
         <img 
-          src={imagen_url[0] || "https://via.placeholder.com/300x300"} 
+          src={imageUrl}
           className="card-img-top" 
           alt={title} 
         />
