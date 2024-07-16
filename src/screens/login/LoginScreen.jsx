@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { login } from '../../fetching/auth.fetching';
 import { Link, useNavigate } from 'react-router-dom';
-import FacebookLogin from 'react-facebook-login';
+//import FacebookLogin from 'react-facebook-login';
 import './LoginScreen.css';
 
 const LoginScreen = () => {
@@ -79,7 +79,7 @@ const LoginScreen = () => {
                                     Iniciar sesión con Google
                                 </button>
                                 {/* Componente FacebookLogin con estilo personalizado */}
-                                <FacebookLogin
+                                {/* <FacebookLogin
                                     appId="497976672798785"
                                     autoLoad={false}
                                     fields="id,name,email"
@@ -87,7 +87,7 @@ const LoginScreen = () => {
                                     cssClass="my-facebook-button-class btn btn-primary w-100"
                                     icon={<FontAwesomeIcon icon={faFacebookF} className="mx-2" />}
                                     textButton="&nbsp;&nbsp;Iniciar sesión con Facebook"
-                                />
+                                /> */}
                             </div>
                         </div>
                     </div>
