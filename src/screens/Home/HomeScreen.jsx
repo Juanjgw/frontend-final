@@ -4,8 +4,6 @@ import ServiceList from "../Services/ServiceList";
 import axios from "axios";
 import { URL } from "../../fetching/http";
 
-
-
 const HomeScreen = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,51 +14,42 @@ const HomeScreen = () => {
   const [servicesPerPage, setServicesPerPage] = useState(18);
   const [allServices, setAllServices] = useState([]);
 
-
+  // Función para calcular la cantidad de servicios por página
   const calculateServicesPerPage = () => {
     const width = window.innerWidth;
     let columns = 1;
 
-console.log(width)
     if (width >= 1200) columns = 5;
     else if (width >= 992) columns = 4;
     else if (width >= 768) columns = 3;
     else if (width >= 576) columns = 2;
 
-console.log(columns)
-    return columns === 3 ? 18 : 20;
+    return columns === 3 ? 18 : 20; // Ajusta según tus necesidades
   };
 
-
+  // Efecto para inicialización y manejo de redimensionamiento
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
-
 
     const updateServicesPerPage = () => {
       setServicesPerPage(calculateServicesPerPage());
     };
 
-
     window.addEventListener("resize", updateServicesPerPage);
     updateServicesPerPage();
 
-
     fetchServices(page);
-
 
     return () => {
       window.removeEventListener("resize", updateServicesPerPage);
     };
-  }, []);
+  }, [page]);
 
-
+  // Función para obtener servicios
   const fetchServices = (page) => {
     axios
-      .get(
-        URL.URL_API +
-          "/api/servicios?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlcGUxNDNAZ21haWwuY29tIiwidXNlcl9pZCI6NDgsImlhdCI6MTcyMDU5NTc5NywiZXhwIjoxNzIwNTk5Mzk3fQ.t8mC94nMwMzmQLVxGJ1cXsZuLbmpvw8nHnrbrXqHovM"
-      )
+      .get(URL.URL_API + `/api/servicios?token=your_token_here`)
       .then((data) => {
         let serviciosProcesados = data.data.servicios.map((servicio) => ({
           ...servicio,
@@ -69,10 +58,8 @@ console.log(columns)
             : [],
         }));
 
-
         setTotalServices(serviciosProcesados.length);
         setAllServices(serviciosProcesados);
-
 
         let limit = calculateServicesPerPage() * page;
         let offset = (page - 1) * limit;
@@ -84,68 +71,43 @@ console.log(columns)
       });
   };
 
-
+  // Función para manejar el inicio de sesión
   const handleLogin = () => {
     navigate("/login");
   };
 
-
+  // Función para manejar el cierre de sesión
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     navigate("/login");
   };
 
-
+  // Función para manejar el contacto con un servicio
   const handleContact = (serviceId) => {
     if (!isLoggedIn) {
       navigate("/login");
     } else {
+      // Lógica para contactar con el servicio
     }
   };
 
-
+  // Filtrado de servicios según el término de búsqueda
   const filteredServices = allServices.filter((service) =>
     service.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
+  // Función para manejar el cambio de página
   const handlePage = (action) => {
     if (action === "anterior" && page > 1) {
-      let newPage = page - 1;
-      let limit = calculateServicesPerPage() * newPage;
-      //Si la pagina es 1, el offset no se le resta
-      let offset = newPage === 1 ? (newPage - 1) * limit : (newPage - 1) * limit - 20
- 
-      let ServiciosPaginados = allServices.slice(offset, offset + limit);
-      setServices(ServiciosPaginados);
       setPage(page - 1);
-      console.log("newPage", newPage);
-      console.log("limit", limit);
-      console.log("offset", offset);
-      console.log("servicios paginados", ServiciosPaginados);
     } else if (
       action === "siguiente" &&
       page < Math.ceil(totalServices / servicesPerPage)
     ) {
-      let newPage = page + 1;
-
-
-      let limit = calculateServicesPerPage() * newPage;
-      let offset = (newPage - 1) * limit - 20;
-      let ServiciosPaginados = allServices.slice(offset, offset + limit);
-      setServices(ServiciosPaginados);
-
-
       setPage(page + 1);
-      console.log("newPage", newPage);
-      console.log("limit", limit);
-      console.log("offset", offset);
-      console.log("servicios paginados", ServiciosPaginados);
     }
-   
   };
-
 
   return (
     <div className="container">
@@ -218,8 +180,4 @@ console.log(columns)
   );
 };
 
-
 export default HomeScreen;
-
-
-
