@@ -49,9 +49,9 @@ const HomeScreen = () => {
   // Función para obtener servicios
   const fetchServices = (page) => {
     axios
-      .get(URL.URL_API + `/api/servicios?token=your_token_here`)
-      .then((data) => {
-        let serviciosProcesados = data.data.servicios.map((servicio) => ({
+      .get(`${URL.URL_API}/api/servicios?token=${localStorage.getItem("token")}`)
+      .then((response) => {
+        let serviciosProcesados = response.data.servicios.map((servicio) => ({
           ...servicio,
           imagen_url: servicio.imagen_url
             ? servicio.imagen_url.split(",").map((url) => url.trim())
@@ -61,13 +61,13 @@ const HomeScreen = () => {
         setTotalServices(serviciosProcesados.length);
         setAllServices(serviciosProcesados);
 
-        let limit = calculateServicesPerPage() * page;
+        let limit = calculateServicesPerPage();
         let offset = (page - 1) * limit;
-        let ServiciosPaginados = serviciosProcesados.slice(
-          offset,
-          offset + limit
-        );
-        setServices(ServiciosPaginados);
+        let serviciosPaginados = serviciosProcesados.slice(offset, offset + limit);
+        setServices(serviciosPaginados);
+      })
+      .catch((error) => {
+        console.error("Error fetching services:", error);
       });
   };
 
@@ -129,9 +129,8 @@ const HomeScreen = () => {
         </div>
         {isLoggedIn ? (
           <>
-            {" "}
             <button onClick={() => navigate("/ABM_Servicios/MisServicios")}>
-              Mis Servicios{" "}
+              Mis Servicios
             </button>
             <button className="btn btn-danger" onClick={handleLogout}>
               Cerrar sesión
