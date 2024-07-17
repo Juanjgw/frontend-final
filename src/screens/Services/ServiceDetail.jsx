@@ -1,5 +1,4 @@
-import React, {useState,useEffect}from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
@@ -16,17 +15,17 @@ const ServiceDetail = ({ isLoggedIn }) => {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const response = await axios.get(URL.URL_API +`/api/servicios/${id}`);
+        const response = await axios.get(`${URL.URL_API}/api/servicios/${id}`);
         setService(response.data.servicio);
         setError('');
-        console.log(response)
+        console.log(response);
       } catch (error) {
         setError('Error al cargar el servicio.');
       }
     };
 
     fetchService();
-  }, []);
+  }, [id]);
 
   const renderStars = (rating) => {
     return Array(5)
@@ -59,6 +58,10 @@ const ServiceDetail = ({ isLoggedIn }) => {
     return text;
   };
 
+  const handleClose = () => {
+    navigate('/home');
+  };
+
   if (!service) {
     return <div>Cargando servicio...</div>;
   }
@@ -67,28 +70,26 @@ const ServiceDetail = ({ isLoggedIn }) => {
     return <div>Error: {error}</div>;
   }
 
-  const imageUrl = service.imagen_url ? `https://eshopcompany.com/Servicios/${service.imagen_url}` : "https://via.placeholder.com/300x300";
+  const imageUrl = service.imagen_url ? `https://eshopcompany.com/Servicios/${service.imagen_url}` : 'https://via.placeholder.com/300x400';
 
   return (
-    <div className="card mb-4">
-      <div className="img-container">
+    <div className="service-detail-card mb-4">
+      <button onClick={handleClose} className="service-detail-close-button">Cerrar</button>
+      <div className="service-detail-img-container">
         <img
           src={imageUrl}
           className="card-img-top"
           alt={service.title}
         />
       </div>
-      <div className="card-body">
-        <h5 className="card-title">{truncateText(service.title, 40)}</h5>
-        <p className="card-text card-description">{service.description}</p>
-        <div className="star-rating">{renderStars(service.rating)}</div>
-        <div className="button-container">
-          <button onClick={handleWhatsAppClick} className="whatsapp-button">
+      <div className="service-detail-body">
+        <h5 className="service-detail-title">{truncateText(service.title, 40)}</h5>
+        <p className="service-detail-description">{service.description}</p>
+        <div className="service-detail-star-rating">{renderStars(service.rating)}</div>
+        <div className="service-detail-button-container">
+          <button onClick={handleWhatsAppClick} className="service-detail-whatsapp-button">
             <FontAwesomeIcon icon={faWhatsapp} style={{ marginRight: '5px' }} />
             WhatsApp
-          </button>
-          <button onClick={() => navigate(`/service/${service.id}`)} className="details-button">
-            Detalles
           </button>
         </div>
       </div>
