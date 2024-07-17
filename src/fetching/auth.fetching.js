@@ -6,7 +6,7 @@ export const login = async (usuario) => {
     try {
         const result = await HTTP.POST(URL.URL_API + ROUTE + '/login', usuario);
         if (!result.ok) {
-            throw { status: result.status, message: result.message }; // Mejora en el manejo de errores
+            throw { status: result.status, message: result.message }; 
         } else {
             console.log(result)
             localStorage.setItem('token', result.token);
@@ -38,6 +38,6 @@ export const verificarToken = async () => {
         const result = await HTTP.GET(URL.URL_API + ROUTE + '/verify-token', headers);
         return result;
     } catch (error) {
-        throw { message: error.message }; // Mejora en el manejo de errores
+        throw { message: error.message }; 
     }
 };

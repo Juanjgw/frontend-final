@@ -1,53 +1,82 @@
-.service-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-  }
-  
-  .service-detail .img-container {
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-  }
-  
-  .service-detail .img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .service-detail-body {
-    text-align: center;
-  }
-  
-  .service-detail-body h1 {
-    margin-bottom: 1rem;
-  }
-  
-  .service-detail-body p {
-    margin-bottom: 1.5rem;
-  }
-  
-  .company-logo {
-    width: 150px;
-    height: auto;
-    margin-bottom: 1.5rem;
-  }
-  
-  .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  .social-links a {
-    color: #000;
-  }
-  
-  .social-links a:hover {
-    color: #007bff;
-  }
-  
+.service-detail-card {
+  max-width: 400px;
+  margin: 2rem auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  background-color: #fff;
+}
+
+.service-detail-close-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.9rem;
+}
+
+.service-detail-close-button:hover {
+  background-color: #c82333;
+}
+
+.service-detail-img-container {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+}
+
+.service-detail-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-detail-body {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.service-detail-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.service-detail-description {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+
+.service-detail-star-rating {
+  margin-bottom: 1rem;
+}
+
+.service-detail-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.service-detail-whatsapp-button {
+  background-color: #25d366;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.service-detail-whatsapp-button:hover {
+  background-color: #1ebe57;
+}
