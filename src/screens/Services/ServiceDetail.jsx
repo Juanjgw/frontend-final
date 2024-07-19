@@ -49,6 +49,15 @@ const ServiceDetail = ({ isLoggedIn }) => {
     }
   };
 
+  const truncateText = (text, maxLength) => {
+    if (!text) return ''; // Manejar caso donde text es null o undefined
+
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
+
   const handleClose = () => {
     navigate('/home');
   };
@@ -61,7 +70,7 @@ const ServiceDetail = ({ isLoggedIn }) => {
     return <div>Error: {error}</div>;
   }
 
-  const imageUrl = service.imagen_url ? `https://www.contrataexpertos.com/servicios/imagenes/${service.imagen_url}` : 'https://via.placeholder.com/300x400';
+  const imageUrl = service.imagen_url ? `https://eshopcompany.com/Servicios/Imagenes/${service.imagen_url}` : 'https://via.placeholder.com/300x400';
 
   return (
     <div className="service-detail-card mb-4">
@@ -74,7 +83,7 @@ const ServiceDetail = ({ isLoggedIn }) => {
         />
       </div>
       <div className="service-detail-body">
-        <h5 className="service-detail-title">{service.title}</h5>
+        <h5 className="service-detail-title">{truncateText(service.title, 40)}</h5>
         <p className="service-detail-description">{service.description}</p>
         <div className="service-detail-star-rating">{renderStars(service.rating)}</div>
         <div className="service-detail-button-container">

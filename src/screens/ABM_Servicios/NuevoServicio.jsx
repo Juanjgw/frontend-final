@@ -4,6 +4,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './NuevoServicio.css'; // Archivo de estilos CSS personalizados
 import { URL } from '../../fetching/http';
+
 const NuevoServicio = () => {
     const navigate = useNavigate();
     const [service, setService] = useState({
@@ -15,18 +16,20 @@ const NuevoServicio = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [descriptionLength, setDescriptionLength] = useState(0);
     const [image, setImage] = useState(null); // Cambiado para una sola imagen
+    const [isSubmitting, setIsSubmitting] = useState(false); // Estado para deshabilitar el botón
 
     const handlePost = async () => {
+        setIsSubmitting(true); // Deshabilitar el botón
         try {
             const usuario = JSON.parse(localStorage.getItem("usuario"));
-            const response = await axios.post(URL.URL_API +'/api/servicios', {
+            const response = await axios.post(URL.URL_API + '/api/servicios', {
                 ...service,
                 Usuario_ID: usuario.id // Incluir el ID del usuario actual
             });
             console.log('Servicio creado:', response.data);
             setSuccessMessage('¡Servicio creado exitosamente!');
             setError('');
-            console.log(response)
+            console.log(response);
             const servicioId = response.data.idCreado;
             await handleImageUpload(servicioId); // Subir imagen después de crear el servicio
             setService({
@@ -42,6 +45,8 @@ const NuevoServicio = () => {
             } else {
                 setError('Error al intentar crear el servicio');
             }
+        } finally {
+            setIsSubmitting(false); // Volver a habilitar el botón
         }
     };
 
@@ -53,10 +58,9 @@ const NuevoServicio = () => {
 
         const formData = new FormData();
         formData.append('imagen', image);
-        console.log([...formData])
+        console.log([...formData]);
         try {
-            
-            await axios.post(URL.URL_API +`/api/servicios/${serviceId}/imagenes`, formData, {
+            await axios.post(URL.URL_API + `/api/servicios/${serviceId}/imagenes`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -88,9 +92,8 @@ const NuevoServicio = () => {
         setSuccessMessage('');
     };
 
-    
     const handleFileChange = (event) => {
-        console.log(event.target.files)
+        console.log(event.target.files);
         setImage(event.target.files[0]); // Cambiado para una sola imagen
     };
 
@@ -138,7 +141,12 @@ const NuevoServicio = () => {
                     <Button variant="secondary" onClick={handleCancel} className="btn-cancelar">
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={handlePost} className="btn-crear">
+                    <Button 
+                        variant="primary" 
+                        onClick={handlePost} 
+                        className="btn-crear" 
+                        disabled={isSubmitting}
+                    >
                         Crear Servicio
                     </Button>
                 </div>
