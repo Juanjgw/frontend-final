@@ -114,13 +114,13 @@ const HomeScreen = () => {
       <div className="d-flex justify-content-between align-items-center my-4">
         <div className="d-flex align-items-center">
           <img
-            src="https://eshopcompany.com/imagenes/logo.JPG"
+            src="https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg"
             alt="Logo"
             style={{ height: "50px", marginRight: "10px" }}
           />
           <div>
             <h1 style={{ marginBottom: "0", fontSize: "28px" }}>
-              Bienvenido! a Busca Constructores.
+              Bienvenido! a ContrataExpertos.com
             </h1>
             <p style={{ margin: "0", fontStyle: "italic" }}>
               Tu fuente de profesionales de confianza.

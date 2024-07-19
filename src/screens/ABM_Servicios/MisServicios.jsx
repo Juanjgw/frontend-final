@@ -116,6 +116,7 @@ const MisServicios = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
+                        <th>Imagen</th>
                         <th>Título</th>
                         <th className="description-cell">Descripción</th>
                         <th className="contact-cell">Número de Contacto</th>
@@ -125,6 +126,13 @@ const MisServicios = () => {
                 <tbody>
                     {servicios.map((servicio) => (
                         <tr key={servicio.id}>
+                            <td>
+                                <img 
+                                    src={servicio.imagen_url ? `https://www.contrataexpertos.com/servicios/imagenes/${servicio.imagen_url}` : 'https://via.placeholder.com/150'}
+                                    alt={servicio.title}
+                                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                />
+                            </td>
                             <td>{servicio.title}</td>
                             <td className="description-cell">{servicio.description}</td>
                             <td className="contact-cell">{servicio.contactNumber}</td>

@@ -1,82 +1,66 @@
+/* ServiceDetail.css */
 .service-detail-card {
-  max-width: 400px;
-  margin: 2rem auto;
+  max-width: 600px; /* Aumenta el ancho máximo de la tarjeta */
+  margin: auto;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
   background-color: #fff;
 }
 
-.service-detail-close-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 0.9rem;
+.service-detail-img-container img img {
+  display: block;
+  margin: 0 auto;
+  width: 80%; /* Ajusta el ancho según sea necesario */
+  max-width: 100%; /* Asegura que la imagen no se salga del contenedor */
 }
-
-.service-detail-close-button:hover {
-  background-color: #c82333;
-}
-
-.service-detail-img-container {
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-  border-bottom: 1px solid #ddd;
-}
-
-.service-detail-img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .service-detail-body {
-  padding: 1.5rem;
-  text-align: center;
+  padding: 20px;
 }
 
 .service-detail-title {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #333;
-  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .service-detail-description {
+  white-space: pre-line; /* Respeta los saltos de línea en el texto */
   font-size: 1rem;
-  margin-bottom: 1.5rem;
-  color: #666;
+  margin-bottom: 20px;
 }
 
 .service-detail-star-rating {
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
 }
 
 .service-detail-button-container {
   display: flex;
   justify-content: center;
-  gap: 1rem;
 }
 
 .service-detail-whatsapp-button {
   background-color: #25d366;
   color: white;
+  padding: 10px 20px;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .service-detail-whatsapp-button:hover {
-  background-color: #1ebe57;
+  background-color: #1ebc56;
+}
+
+.service-detail-close-button {
+  background-color: transparent;
+  border: none;
+  color: #999;
+  font-size: 1.2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
