@@ -70,7 +70,7 @@ const ServiceDetail = ({ isLoggedIn }) => {
     return <div>Error: {error}</div>;
   }
 
-  const imageUrl = service.imagen_url ? `https://eshopcompany.com/Servicios/Imagenes/${service.imagen_url}` : 'https://via.placeholder.com/300x400';
+  const imageUrl = service.imagen_url ? `https://contrataexpertos.com/Servicios/Imagenes/${service.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg';
 
   return (
     <div className="service-detail-card mb-4">

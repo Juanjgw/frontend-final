@@ -128,8 +128,8 @@ const MisServicios = () => {
                         <tr key={servicio.id}>
                             <td>
                                 <img 
-                                    src={servicio.imagen_url ? `https://www.contrataexpertos.com/servicios/imagenes/${servicio.imagen_url}` : 'https://via.placeholder.com/150'}
-                                    alt={servicio.title}
+                                    src={servicio.imagen_url ? `https://www.contrataexpertos.com/Servicios/Imagenes/${servicio.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg'}
+                                    alt={servicio.title} 
                                     style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                 />
                             </td>
