@@ -113,41 +113,45 @@ const MisServicios = () => {
                 </div>
             </div>
             {error && <Alert variant="danger">{error}</Alert>}
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Imagen</th>
-                        <th>Título</th>
-                        <th className="description-cell">Descripción</th>
-                        <th className="contact-cell">Número de Contacto</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {servicios.map((servicio) => (
-                        <tr key={servicio.id}>
-                            <td>
-                                <img 
-                                    src={servicio.imagen_url ? `https://www.contrataexpertos.com/Servicios/Imagenes/${servicio.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg'}
-                                    alt={servicio.title} 
-                                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                                />
-                            </td>
-                            <td>{servicio.title}</td>
-                            <td className="description-cell">{servicio.description}</td>
-                            <td className="contact-cell">{servicio.contactNumber}</td>
-                            <td>
-                                <Button variant="primary" className="button-icon" onClick={() => handleEdit(servicio)}>
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </Button>{' '}
-                                <Button variant="danger" className="button-icon" onClick={() => handleDelete(servicio)}>
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </Button>
-                            </td>
+            {!error && servicios.length === 0 && <Alert variant="info">No tienes servicios todavía.</Alert>}
+            {servicios.length > 0 && (
+               
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Título</th>
+                            <th className="description-cell">Descripción</th>
+                            <th className="contact-cell">Número de Contacto</th>
+                            <th>Acciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                        {servicios.map((servicio) => (
+                            <tr key={servicio.id}>
+                                <td>
+                                    <img 
+                                        src={servicio.imagen_url ? `https://www.contrataexpertos.com/Servicios/Imagenes/${servicio.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg'}
+                                        alt={servicio.title} 
+                                        style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                    />
+                                </td>
+                                <td>{servicio.title}</td>
+                                <td className="description-cell">{servicio.description}</td>
+                                <td className="contact-cell">{servicio.contactNumber}</td>
+                                <td>
+                                    <Button variant="primary" className="button-icon" onClick={() => handleEdit(servicio)}>
+                                        <FontAwesomeIcon icon={faEdit} />
+                                    </Button>{' '}
+                                    <Button variant="danger" className="button-icon" onClick={() => handleDelete(servicio)}>
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            )}
 
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
