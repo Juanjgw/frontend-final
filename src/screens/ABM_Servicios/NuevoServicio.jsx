@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,7 @@ const NuevoServicio = () => {
     const [descriptionLength, setDescriptionLength] = useState(0);
     const [image, setImage] = useState(null); // Cambiado para una sola imagen
     const [isSubmitting, setIsSubmitting] = useState(false); // Estado para manejar la desactivación del botón
+    const fileInputRef = useRef(null); // Referencia al campo de archivo
 
     const handlePost = async () => {
         if (isSubmitting) return; // Si ya se está enviando, no hacer nada
@@ -33,14 +34,16 @@ const NuevoServicio = () => {
             setError('');
             console.log(response);
             const servicioId = response.data.idCreado;
-            await handleImageUpload(servicioId); // Subir imagen después de crear el servicio
+            await handleImageUpload(servicioId); 
             setService({
                 title: '',
                 description: '',
                 contactNumber: '+54'
             });
             setDescriptionLength(0);
-            setImage(null); // Resetear la imagen después de subir
+            setImage(null); 
+            fileInputRef.current.value = '';
+            
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setError(error.response.data.message);
@@ -96,7 +99,7 @@ const NuevoServicio = () => {
 
     const handleFileChange = (event) => {
         console.log(event.target.files);
-        setImage(event.target.files[0]); // Cambiado para una sola imagen
+        setImage(event.target.files[0]); 
     };
 
     const handleCancel = () => {
@@ -137,7 +140,7 @@ const NuevoServicio = () => {
                 </Form.Group>
                 <Form.Group controlId="formFile">
                     <Form.Label>Imagen del Servicio</Form.Label>
-                    <Form.Control type="file" onChange={handleFileChange} />
+                    <Form.Control type="file" onChange={handleFileChange} ref={fileInputRef} />
                 </Form.Group>
                 <div className="button-container">
                     <Button variant="secondary" onClick={handleCancel} className="btn-cancelar">
