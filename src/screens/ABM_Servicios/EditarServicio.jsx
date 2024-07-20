@@ -2,59 +2,29 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import "./NuevoServicio.css"; // Archivo de estilos CSS personalizados
+import "./NuevoServicio.css";
 import { URL } from "../../fetching/http";
-
 
 const EditarServicio = () => {
   const location = useLocation();
-  console.log(location.state.servicio);
   const navigate = useNavigate();
-  const { id } = useParams(); // Obtener el ID del servicio desde la URL
+  const { id } = useParams(); 
   const [service, setService] = useState({
     title: location.state.servicio.title,
     description: location.state.servicio.description,
     contactNumber: location.state.servicio.contactNumber,
+    imagen_url: location.state.servicio.imagen_url
   });
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [descriptionLength, setDescriptionLength] = useState(0);
-  const [image, setImage] = useState(null); // Para la nueva imagen
-  const [isSubmitting, setIsSubmitting] = useState(false); // Estado para manejar la desactivación del botón
-  const fileInputRef = useRef(null); // Referencia al campo de archivo
-
-
-  /*   useEffect(() => {
-    // Obtener los datos del servicio para editar
-    const fetchService = async () => {
-      try {
-        const response = await axios.get(`${URL.URL_API}/api/servicios/${id}`);
-        setService({
-          title: response.data.title,
-          description: response.data.description,
-          contactNumber: response.data.contactNumber,
-        });
-        setDescriptionLength(response.data.description.length);
-      } catch (error) {
-        setError("Error al cargar el servicio.");
-      }
-    };
-
-
-
-
-
-
-
-
-    fetchService();
-  }, [id]); */
-
+  const [image, setImage] = useState(null); 
+  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const fileInputRef = useRef(null); 
 
   const handlePost = async () => {
-    if (isSubmitting) return; // Si ya se está enviando, no hacer nada
-    setIsSubmitting(true); // Desactivar el botón al comenzar la solicitud
-
+    if (isSubmitting) return; 
+    setIsSubmitting(true); 
 
     try {
       const response = await axios.put(
@@ -65,17 +35,15 @@ const EditarServicio = () => {
       setSuccessMessage("¡Servicio actualizado exitosamente!");
       setError("");
 
-
       if (image) {
-        await handleImageUpload(); // Solo subir imagen si se ha cambiado
+        await handleImageUpload(); 
       }
 
-
-      // Reiniciar estado
       setService({
         title: "",
         description: "",
         contactNumber: "+54",
+        imagen_url: ""
       });
       setDescriptionLength(0);
       setImage(null);
@@ -87,17 +55,15 @@ const EditarServicio = () => {
         setError("Error al intentar actualizar el servicio");
       }
     } finally {
-      setIsSubmitting(false); // Reactivar el botón al terminar la solicitud
+      setIsSubmitting(false); 
     }
   };
-
 
   const handleImageUpload = async () => {
     if (!image) {
       setError("Por favor, selecciona una imagen.");
       return;
     }
-
 
     const formData = new FormData();
     formData.append("imagen", image);
@@ -123,7 +89,6 @@ const EditarServicio = () => {
     }
   };
 
-
   const handleUpdate = async () => {
     setIsSubmitting(true);
     try {
@@ -144,49 +109,44 @@ const EditarServicio = () => {
     }
   };
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
-
 
     if (name === "description") {
       setDescriptionLength(value.length);
     }
-
 
     setService((prevService) => ({
       ...prevService,
       [name]: value,
     }));
 
-
     setError("");
     setSuccessMessage("");
   };
-
 
   const handleFileChange = (event) => {
     setImage(event.target.files[0]);
   };
 
-
   const handleCancel = () => {
     navigate("/ABM_Servicios/MisServicios");
   };
 
-
   return (
     <div className="formulario-servicio">
       <h2>Editar Servicio</h2>
-      <div className="recomendaciones">
-        <h4>Recomendaciones para una buena publicación:</h4>
-        <ul>
-          <li>Escribe un título claro y descriptivo.</li>
-          <li>Detalla tu servicio de manera concisa pero completa.</li>
-          <li>Proporciona un número de contacto válido.</li>
-        </ul>
-      </div>
+      
       <Form>
+        {service.imagen_url && (
+          <div className="service-image">
+            <img
+              src={service.imagen_url ? `https://www.contrataexpertos.com/Servicios/Imagenes/${service.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg'}
+              alt={service.title}
+              style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+            />
+          </div>
+        )}
         <Form.Group controlId="formTitle">
           <Form.Label>Título</Form.Label>
           <Form.Control
@@ -249,8 +209,4 @@ const EditarServicio = () => {
   );
 };
 
-
 export default EditarServicio;
-
-
-
