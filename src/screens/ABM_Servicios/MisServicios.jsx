@@ -140,7 +140,7 @@ const MisServicios = () => {
                                 <td className="description-cell">{servicio.description}</td>
                                 <td className="contact-cell">{servicio.contactNumber}</td>
                                 <td>
-                                    <Button variant="primary" className="button-icon" onClick={() => handleEdit(servicio)}>
+                                    <Button variant="primary" className="button-icon" onClick={() => navigate("/ABM_Servicios/EditarServicio",{state:{servicio:servicio}})}>
                                         <FontAwesomeIcon icon={faEdit} />
                                     </Button>{' '}
                                     <Button variant="danger" className="button-icon" onClick={() => handleDelete(servicio)}>

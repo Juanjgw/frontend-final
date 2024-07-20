@@ -8,6 +8,7 @@ import ServiceDetail from './screens/Services/ServiceDetail';
 import RegisterReferralsScreen from './screens/RegisterReferrals/RegisterReferralsScreen';
 import NuevoServicio from './screens/ABM_Servicios/NuevoServicio';
 import MisServicios from './screens/ABM_Servicios/MisServicios';
+import EditarServicio from './screens/ABM_Servicios/EditarServicio';
 
 const RouterApp = () => {
 	const navigate = useNavigate()
@@ -38,7 +39,8 @@ const RouterApp = () => {
 			<Route path="/service/:id" element={<ServiceDetail />} />
 			<Route path="/ABM_Servicios/MisServicios" element={<MisServicios />} /> {/* Ruta para MisServicios */}
 			<Route path="/referrals/:ReferralLink" element={<RegisterReferralsScreen />} />
-		</Routes>
+			<Route path="/ABM_Servicios/EditarServicio" element={<EditarServicio/>}/>
+	 	</Routes>
 	)
 }
 
