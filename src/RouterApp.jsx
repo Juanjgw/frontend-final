@@ -11,8 +11,9 @@ import MisServicios from './screens/ABM_Servicios/MisServicios';
 import EditarServicio from './screens/ABM_Servicios/EditarServicio';
 
 const RouterApp = () => {
-	const navigate = useNavigate()
-	useEffect(() => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
 		verificarToken()
 			.then(resultado => {
 				if (resultado.status == 200) {
@@ -20,7 +21,7 @@ const RouterApp = () => {
 				}
 				else {
 					navigate('/login')
-				}
+                }
 			})
 	}
 		, []
@@ -29,20 +30,22 @@ const RouterApp = () => {
 
 
 
-	return (
-		<Routes>
-			<Route path="/" element={<HomeScreen />} />
-			<Route path="/login" element={<LoginScreen />} />
-			<Route path="/register" element={<RegisterScreen />} />
-			<Route path="/home" element={<HomeScreen />} />
-			<Route path="/ABM_Servicios/NuevoServicio" element={<NuevoServicio />} />
-			<Route path="/service/:id" element={<ServiceDetail />} />
+    return (
+        <Routes>
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/login" element={<LoginScreen />} />
+            <Route path="/register" element={<RegisterScreen />} />
+            <Route path="/home" element={<HomeScreen />} />
+            <Route path="/ABM_Servicios/NuevoServicio" element={<NuevoServicio />} />
+			
 			<Route path="/ABM_Servicios/MisServicios" element={<MisServicios />} /> {/* Ruta para MisServicios */}
-			<Route path="/referrals/:ReferralLink" element={<RegisterReferralsScreen />} />
-			<Route path="/ABM_Servicios/EditarServicio" element={<EditarServicio/>}/>
-	 	</Routes>
-	)
-}
+			<Route path="/service/:id" element={<ServiceDetail />} />
+			<Route path="/ABM_Servicios/EditarServicio/:id" element={<EditarServicio />} />
+			            <Route path="/service/:id" element={<ServiceDetail />} />
+           
+            <Route path="/referrals/:ReferralLink" element={<RegisterReferralsScreen />} />
+         </Routes>
+    );
+};
 
-export default RouterApp
-
+export default RouterApp;

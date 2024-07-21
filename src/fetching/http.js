@@ -1,6 +1,4 @@
-
-
-
+//http.js
 export const HTTP = {
     GET: async (url, headers) =>{
         const response = await fetch(url, {

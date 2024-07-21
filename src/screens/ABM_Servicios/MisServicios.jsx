@@ -5,7 +5,6 @@ import { Table, Button, Modal, Form, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import './MisServicios.css'; // Importar el archivo CSS
-
 import { URL } from '../../fetching/http';
 
 const MisServicios = () => {
@@ -53,24 +52,10 @@ const MisServicios = () => {
     };
 
     const handleEdit = (servicio) => {
-        setServiceToUpdate({
-            id: servicio.id,
-            title: servicio.title,
-            description: servicio.description,
-            contactNumber: servicio.contactNumber,
-        });
-        setShowModal(true);
+        navigate(`/ABM_Servicios/EditarServicio/${servicio.id}`);
     };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-        setServiceToUpdate({
-            id: '',
-            title: '',
-            description: '',
-            contactNumber: '',
-        });
-    };
+ 
 
     const handleCloseDeleteModal = () => {
         setShowDeleteModal(false);
@@ -115,7 +100,6 @@ const MisServicios = () => {
             {error && <Alert variant="danger">{error}</Alert>}
             {!error && servicios.length === 0 && <Alert variant="info">No tienes servicios todavía.</Alert>}
             {servicios.length > 0 && (
-               
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -140,9 +124,14 @@ const MisServicios = () => {
                                 <td className="description-cell">{servicio.description}</td>
                                 <td className="contact-cell">{servicio.contactNumber}</td>
                                 <td>
-                                    <Button variant="primary" className="button-icon" onClick={() => navigate("/ABM_Servicios/EditarServicio",{state:{servicio:servicio}})}>
-                                        <FontAwesomeIcon icon={faEdit} />
-                                    </Button>{' '}
+                                <Button
+    variant="primary"
+    className="button-icon"
+    onClick={() => navigate(`/ABM_Servicios/EditarServicio/${servicio.id}`, { state: { servicio } })}
+>
+    <FontAwesomeIcon icon={faEdit} />
+</Button>
+
                                     <Button variant="danger" className="button-icon" onClick={() => handleDelete(servicio)}>
                                         <FontAwesomeIcon icon={faTrash} />
                                     </Button>

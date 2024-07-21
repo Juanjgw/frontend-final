@@ -1,3 +1,4 @@
+//auth.fetching.js
 import { HTTP, URL } from "./http";
 
 const ROUTE = '/api/auth';
