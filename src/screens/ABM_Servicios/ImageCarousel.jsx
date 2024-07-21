@@ -1,27 +1,25 @@
 import React from 'react';
-import { MDBCarousel, MDBCarouselItem } from 'mdb-react-ui-kit';
+import { MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBCarouselElement, MDBCarouselCaption } from 'mdb-react-ui-kit';
 
 const ImageCarousel = ({ images }) => {
-    // Log para ver las imágenes recibidas por el componente
-    console.log('Images received by ImageCarousel:', images);
-
     return (
-        <MDBCarousel>
-            {images.map((image, index) => (
-                <MDBCarouselItem
-                    key={index}
-                    className='w-100 d-block'
-                    itemId={index}
-                >
-                    <img
-                        src={image.imagen_url}
-                        alt={`Imagen ${index + 1}`}
-                        className='d-block w-100'
-                    />
-                </MDBCarouselItem>
-            ))}
+        <MDBCarousel showControls showIndicators>
+            <MDBCarouselInner>
+                {images.map((image, index) => (
+                    <MDBCarouselItem key={index} className={index === 0 ? 'active' : ''}>
+                        <MDBCarouselElement
+                            src={image.imagen_url}
+                            alt={`Imagen ${index + 1}`}
+                            className='d-block w-100'
+                        />
+                        <MDBCarouselCaption>
+                            <h5>Imagen {index + 1}</h5>
+                        </MDBCarouselCaption>
+                    </MDBCarouselItem>
+                ))}
+            </MDBCarouselInner>
         </MDBCarousel>
     );
 };
 
-export default ImageCarousel; // Solo una exportación por defecto
+export default ImageCarousel;
