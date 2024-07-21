@@ -11,14 +11,7 @@ const MisServicios = () => {
     const navigate = useNavigate();
     const [servicios, setServicios] = useState([]);
     const [error, setError] = useState('');
-    const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [serviceToUpdate, setServiceToUpdate] = useState({
-        id: '',
-        title: '',
-        description: '',
-        contactNumber: '',
-    });
     const [serviceToDelete, setServiceToDelete] = useState(null);
 
     useEffect(() => {
@@ -55,33 +48,9 @@ const MisServicios = () => {
         navigate(`/ABM_Servicios/EditarServicio/${servicio.id}`);
     };
 
- 
-
     const handleCloseDeleteModal = () => {
         setShowDeleteModal(false);
         setServiceToDelete(null);
-    };
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setServiceToUpdate((prevService) => ({
-            ...prevService,
-            [name]: value,
-        }));
-    };
-
-    const handleUpdate = async () => {
-        try {
-            await axios.put(`${URL.URL_API}/api/servicios/${serviceToUpdate.id}`, {
-                title: serviceToUpdate.title,
-                description: serviceToUpdate.description,
-                contactNumber: serviceToUpdate.contactNumber,
-            });
-            fetchServicios();
-            setShowModal(false);
-        } catch (error) {
-            setError('Error al actualizar el servicio.');
-        }
     };
 
     return (
@@ -124,14 +93,13 @@ const MisServicios = () => {
                                 <td className="description-cell">{servicio.description}</td>
                                 <td className="contact-cell">{servicio.contactNumber}</td>
                                 <td>
-                                <Button
-    variant="primary"
-    className="button-icon"
-    onClick={() => navigate(`/ABM_Servicios/EditarServicio/${servicio.id}`, { state: { servicio } })}
->
-    <FontAwesomeIcon icon={faEdit} />
-</Button>
-
+                                    <Button
+                                        variant="primary"
+                                        className="button-icon"
+                                        onClick={() => navigate(`/ABM_Servicios/EditarServicio/${servicio.id}`, { state: { servicio } })}
+                                    >
+                                        <FontAwesomeIcon icon={faEdit} />
+                                    </Button>
                                     <Button variant="danger" className="button-icon" onClick={() => handleDelete(servicio)}>
                                         <FontAwesomeIcon icon={faTrash} />
                                     </Button>
@@ -141,36 +109,6 @@ const MisServicios = () => {
                     </tbody>
                 </Table>
             )}
-
-            <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Editar Servicio</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group controlId="formTitle">
-                            <Form.Label>Título</Form.Label>
-                            <Form.Control type="text" name="title" value={serviceToUpdate.title} onChange={handleChange} />
-                        </Form.Group>
-                        <Form.Group controlId="formDescription">
-                            <Form.Label>Descripción</Form.Label>
-                            <Form.Control type="text" name="description" value={serviceToUpdate.description} onChange={handleChange} />
-                        </Form.Group>
-                        <Form.Group controlId="formContactNumber">
-                            <Form.Label>Número de Contacto</Form.Label>
-                            <Form.Control type="text" name="contactNumber" value={serviceToUpdate.contactNumber} onChange={handleChange} />
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
-                        Cancelar
-                    </Button>
-                    <Button variant="primary" onClick={handleUpdate}>
-                        Guardar Cambios
-                    </Button>
-                </Modal.Footer>
-            </Modal>
 
             <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
                 <Modal.Header closeButton>
