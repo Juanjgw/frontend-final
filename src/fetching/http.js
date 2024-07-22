@@ -28,6 +28,11 @@ export const HTTP = {
 
 export const URL = {
     
-   // URL_API: 'https://backend-final-con-sql.onrender.com',
-   URL_API: 'http://localhost:4041',
+   // tp final 
+   // URL_API: 'https://backend-final-con-sql.onrender.com', 
+   // local
+   // URL_API: 'http://localhost:4041',
+   // produccion
+   URL_API: 'https://contrata-expertos-backed.onrender.com', 
+
 }
