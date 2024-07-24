@@ -141,7 +141,7 @@ const EditarServicio = () => {
         {service.imagen_url && (
           <div className="service-image">
             <img
-              src={service.imagen_url ? `https://www.contrataexpertos.com/Servicios/Imagenes/${service.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg'}
+              src={service.imagen_url ? `https://www.contrataexpertos.com.ar/Servicios/Imagenes/${service.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg'}
               alt={service.title}
               style={{ width: '200px', height: '200px', objectFit: 'cover' }}
             />

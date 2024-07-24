@@ -84,7 +84,7 @@ const MisServicios = () => {
                             <tr key={servicio.id}>
                                 <td>
                                     <img 
-                                        src={servicio.imagen_url ? `https://www.contrataexpertos.com/Servicios/Imagenes/${servicio.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg'}
+                                        src={servicio.imagen_url ? `https://www.contrataexpertos.com.ar/Servicios/Imagenes/${servicio.imagen_url}` : 'https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg'}
                                         alt={servicio.title} 
                                         style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                     />

@@ -114,7 +114,7 @@ const HomeScreen = () => {
       <div className="d-flex justify-content-between align-items-center my-4">
         <div className="d-flex align-items-center">
           <img
-            src="https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg"
+            src="https://www.contrataexpertos.com.ar/ImagenesSistema/LogoContrataExpertos.jpeg"
             alt="Logo"
             style={{ height: "50px", marginRight: "10px" }}
           />

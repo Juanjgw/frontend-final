@@ -48,7 +48,7 @@ let {referralLink}= useParams()
           <div className='card my-5 '> 
             <div className='card-body p-5 custom-bg-color'>
             <div className='text-center mb-4'>
-                                <img src='https://contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg' alt='Logo' style={{ width: '150px' }} />
+                                <img src='https://contrataexpertos.com.ar/ImagenesSistema/LogoContrataExpertos.jpeg' alt='Logo' style={{ width: '150px' }} />
                             </div>
               <h3 className='text-center mb-4'>Registro</h3>
               {errorText && <p className='text-danger'>{errorText}</p>}

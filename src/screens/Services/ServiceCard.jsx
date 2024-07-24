@@ -37,7 +37,7 @@ const ServiceCard = ({ service, isLoggedIn }) => {
     return text;
   };
 
-  const imageUrl = imagen_url && imagen_url[0] ? `https://www.contrataexpertos.com/Servicios/Imagenes/${imagen_url[0]}` : "https://www.contrataexpertos.com/ImagenesSistema/LogoContrataExpertos.jpeg";
+  const imageUrl = imagen_url && imagen_url[0] ? `https://www.contrataexpertos.com.ar/Servicios/Imagenes/${imagen_url[0]}` : "https://www.contrataexpertos.com.ar/ImagenesSistema/LogoContrataExpertos.jpeg";
 
   return (
     <div className="card mb-4">
