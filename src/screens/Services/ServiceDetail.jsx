@@ -11,14 +11,20 @@ const ServiceDetail = ({ id }) => {
     useEffect(() => {
         const fetchService = async () => {
             try {
+                // Obtener los datos del servicio
                 const data = await getServiceById(id);
+                
+                // Verificar si se obtuvieron datos
                 if (data) {
                     setService(data);
+                    
+                    // Verificar si hay imágenes y establecer el estado
                     if (data.imagenes) {
                         setImages(data.imagenes);
                     }
                 }
             } catch (error) {
+                // Manejar errores de la llamada a la API
                 setError(`Error al cargar el servicio: ${error.message}`);
             }
         };
@@ -26,6 +32,7 @@ const ServiceDetail = ({ id }) => {
         fetchService();
     }, [id]);
 
+    // Mostrar error si hay
     if (error) return <div>{error}</div>;
 
     return (
@@ -35,6 +42,7 @@ const ServiceDetail = ({ id }) => {
                     <h1>{service.title}</h1>
                     <p>{service.description}</p>
                     
+                    {/* Mostrar carrusel si hay imágenes */}
                     {images.length > 0 ? (
                         <Carousel>
                             {images.map((img, index) => (

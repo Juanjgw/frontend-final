@@ -1,30 +1,53 @@
-//http.js
 export const HTTP = {
-    GET: async (url, headers) =>{
+    GET: async (url, headers = {}) => {
         const response = await fetch(url, {
             method: 'GET',
-            headers: headers
-  
-        })
-        return response.json()
+            headers: headers,
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        return response.json();
     },
-    POST: async (url, body) =>{
+    POST: async (url, body, headers = {}) => {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                ...headers,
             },
-            body: JSON.stringify(body)
-        })
-        return response.json()
+            body: JSON.stringify(body),
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        return response.json();
     },
-    PUT:  () =>{
-
+    PUT: async (url, body, headers = {}) => {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                ...headers,
+            },
+            body: JSON.stringify(body),
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        return response.json();
     },
-    DELETE:() =>{
-
+    DELETE: async (url, headers = {}) => {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: headers,
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        return response.json();
     }
-}
+};
 
 export const URL = {
     
