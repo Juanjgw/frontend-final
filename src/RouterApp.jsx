@@ -14,21 +14,15 @@ const RouterApp = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-		verificarToken()
-			.then(resultado => {
-				if (resultado.status == 200) {
-					navigate('/home')
-				}
-				else {
-					navigate('/login')
+        verificarToken()
+            .then(resultado => {
+                if (resultado.status === 200) {
+                    navigate('/home');
+                } else {
+                    navigate('/login');
                 }
-			})
-	}
-		, []
-	)
-
-
-
+            });
+    }, [navigate]);
 
     return (
         <Routes>
@@ -37,14 +31,11 @@ const RouterApp = () => {
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/home" element={<HomeScreen />} />
             <Route path="/ABM_Servicios/NuevoServicio" element={<NuevoServicio />} />
-			
-			<Route path="/ABM_Servicios/MisServicios" element={<MisServicios />} /> {/* Ruta para MisServicios */}
-			<Route path="/service/:id" element={<ServiceDetail />} />
-			<Route path="/ABM_Servicios/EditarServicio/:id" element={<EditarServicio />} />
-			            <Route path="/service/:id" element={<ServiceDetail />} />
-           
+            <Route path="/ABM_Servicios/MisServicios" element={<MisServicios />} /> {/* Ruta para MisServicios */}
+            <Route path="/service/:id" element={<ServiceDetail />} />
+            <Route path="/ABM_Servicios/EditarServicio/:id" element={<EditarServicio />} />
             <Route path="/referrals/:ReferralLink" element={<RegisterReferralsScreen />} />
-         </Routes>
+        </Routes>
     );
 };
 
