@@ -56,7 +56,8 @@ export const URL = {
    // local
     //URL_API: 'http://localhost:4041',
  // produccion
-   URL_API: 'https://contrata-expertos-backed.onrender.com', 
+   URL_API: 'https://backend-contrata-expertos.onrender.com', 
+  
    //URL_API: 'https://contrataexpertos.com',
 
 }
