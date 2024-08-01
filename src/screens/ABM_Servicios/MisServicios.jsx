@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Table, Button, Modal, Form, Alert } from 'react-bootstrap';
+import { Table, Button, Modal, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import './MisServicios.css'; // Importar el archivo CSS
@@ -21,6 +21,9 @@ const MisServicios = () => {
     const fetchServicios = async () => {
         try {
             const usuario = JSON.parse(localStorage.getItem("usuario"));
+            if (!usuario || !usuario.id) {
+                throw new Error('Usuario no encontrado en localStorage');
+            }
             const response = await axios.get(`${URL.URL_API}/api/servicios/servicios_usuario/${usuario.id}`);
             setServicios(response.data);
             setError('');
