@@ -73,11 +73,11 @@ const LoginScreen = () => {
                             </form>
                             <p className='text-center mb-0'>¿Aún no tienes cuenta? <Link to='/register'>Regístrate Gratis aquí</Link></p>
                             <div className='text-center mt-4'>
-                                <p>o inicia sesión con:</p>
-                                <button className='btn btn-danger mb-2 w-100'>
+                                {/*<p>o inicia sesión con:</p>*/}
+                                {/* <button className='btn btn-danger mb-2 w-100'>
                                     <FontAwesomeIcon icon={faGoogle} className='mx-2' />
                                     Iniciar sesión con Google
-                                </button>
+                                </button> */}
                                 {/* Componente FacebookLogin con estilo personalizado */}
                                 {/* <FacebookLogin
                                     appId="497976672798785"

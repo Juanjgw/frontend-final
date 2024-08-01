@@ -47,9 +47,9 @@ const RegisterScreen = () => {
         <div className='col-md-6 '>
           <div className='card my-5 '> 
             <div className='card-body p-5 custom-bg-color'>
-            <div className='text-center mb-4'>
-                                <img src='https://contrataexpertos.com.ar/ImagenesSistema/LogoContrataExpertos.jpeg' alt='Logo' style={{ width: '150px' }} />
-                            </div>
+              <div className='text-center mb-4'>
+                <img src='https://contrataexpertos.com.ar/ImagenesSistema/LogoContrataExpertos.jpeg' alt='Logo' style={{ width: '150px' }} />
+              </div>
               <h3 className='text-center mb-4'>Registro</h3>
               {errorText && <p className='text-danger'>{errorText}</p>}
               <form onSubmit={handleSubmit}>
@@ -68,15 +68,15 @@ const RegisterScreen = () => {
                 <button type='submit' className='btn btn-primary w-100 mb-3'>Registrar</button>
               </form>
               <div className='text-center mt-4'>
-                <p>o regístrate con:</p>
-                <button className='btn btn-danger mb-2 w-100'>
+                {/*<p>o regístrate con:</p>*/}
+                {/* <button className='btn btn-danger mb-2 w-100'>
                   <FontAwesomeIcon icon={faGoogle} className='mx-2' />
                   Regístrate con Google
                 </button>
                 <button className='btn btn-primary mb-4 w-100'>
                   <FontAwesomeIcon icon={faFacebookF} className='mx-2' />
                   Regístrate con Facebook
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
