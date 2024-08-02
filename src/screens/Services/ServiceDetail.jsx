@@ -1,65 +1,91 @@
-import React, { useEffect, useState } from "react";
-import { getServiceById } from "../../fetching/service.fetching";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import axios from 'axios';
+import './ServiceDetail.css';
+import { URL } from '../../fetching/http';
 
-const ServiceDetail = ({ id }) => {
-    const [service, setService] = useState(null);
-    const [images, setImages] = useState([]);
-    const [error, setError] = useState("");
+const ServiceDetail = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [service, setService] = useState(null);
+  const [error, setError] = useState('');
 
-    useEffect(() => {
-        const fetchService = async () => {
-            try {
-                // Obtener los datos del servicio
-                const data = await getServiceById(id);
-                
-                // Verificar si se obtuvieron datos
-                if (data) {
-                    setService(data);
-                    
-                    // Verificar si hay imágenes y establecer el estado
-                    if (data.imagenes) {
-                        setImages(data.imagenes);
-                    }
-                }
-            } catch (error) {
-                // Manejar errores de la llamada a la API
-                setError(`Error al cargar el servicio: ${error.message}`);
-            }
-        };
+  useEffect(() => {
+    const fetchService = async () => {
+      try {
+        const response = await axios.get(`${URL.URL_API}/api/servicios/${id}`);
+        setService(response.data.servicio);
+        setError('');
+        console.log(response);
+      } catch (error) {
+        setError('Error al cargar el servicio.');
+      }
+    };
 
-        fetchService();
-    }, [id]);
+    fetchService();
+  }, [id]);
 
-    // Mostrar error si hay
-    if (error) return <div>{error}</div>;
+  const renderStars = (rating) => {
+    return Array(5)
+      .fill(0)
+      .map((_, i) => (
+        <span key={i} style={{ color: i < rating ? '#ffd700' : '#ccc' }}>
+          &#9733;
+        </span>
+      ));
+  };
 
-    return (
-        <div>
-            {service ? (
-                <>
-                    <h1>{service.title}</h1>
-                    <p>{service.description}</p>
-                    
-                    {/* Mostrar carrusel si hay imágenes */}
-                    {images.length > 0 ? (
-                        <Carousel>
-                            {images.map((img, index) => (
-                                <div key={index}>
-                                    <img src={img} alt={`Imagen ${index}`} />
-                                </div>
-                            ))}
-                        </Carousel>
-                    ) : (
-                        <p>No hay imágenes disponibles.</p>
-                    )}
-                </>
-            ) : (
-                <p>Cargando...</p>
-            )}
+  const handleWhatsAppClick = () => {
+    if (isLoggedIn && service.contactNumber) {
+      const encodedMessage = encodeURIComponent(`Hola, me contacto desde www.example.com y necesito un presupuesto por ${service.title}`);
+      const whatsappUrl = `https://api.whatsapp.com/send/?phone=${service.contactNumber}&text=${encodedMessage}&type=phone_number&app_absent=0`;
+      window.open(whatsappUrl, '_blank');
+    } else if (isLoggedIn && !service.contactNumber) {
+      console.error('El número de contacto no está definido en el servicio.');
+    } else {
+      navigate('/login');
+    }
+  };
+
+  const handleClose = () => {
+    navigate('/home');
+  };
+
+  if (!service) {
+    return <div>Cargando servicio...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const imageUrl = service.imagen_url ? `https://www.contrataexpertos.com.ar/Servicios/Imagenes/${service.imagen_url}` : 'https://via.placeholder.com/300x400';
+
+  return (
+    <div className="service-detail-card mb-4">
+      <button onClick={handleClose} className="service-detail-close-button">Cerrar</button>
+      <div className="service-detail-img-container">
+        <img
+          src={imageUrl}
+          className="card-img-top"
+          alt={service.title}
+        />
+      </div>
+      <div className="service-detail-body">
+        <h5 className="service-detail-title">{service.title}</h5>
+        <p className="service-detail-description">{service.description}</p>
+        <div className="service-detail-star-rating">{renderStars(service.rating)}</div>
+        <div className="service-detail-button-container">
+          <button onClick={handleWhatsAppClick} className="service-detail-whatsapp-button">
+            <FontAwesomeIcon icon={faWhatsapp} style={{ marginRight: '5px' }} />
+            WhatsApp
+          </button>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default ServiceDetail;
